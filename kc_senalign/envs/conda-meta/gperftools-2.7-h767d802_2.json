@@ -1,0 +1,912 @@
+{
+  "build": "h767d802_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/conda-forge/linux-64",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=4.9",
+    "libstdcxx-ng >=4.9",
+    "perl"
+  ],
+  "extracted_package_dir": "/home/hieu/anaconda3/pkgs/gperftools-2.7-h767d802_2",
+  "features": "",
+  "files": [
+    "bin/pprof",
+    "include/google/heap-checker.h",
+    "include/google/heap-profiler.h",
+    "include/google/malloc_extension.h",
+    "include/google/malloc_extension_c.h",
+    "include/google/malloc_hook.h",
+    "include/google/malloc_hook_c.h",
+    "include/google/profiler.h",
+    "include/google/stacktrace.h",
+    "include/google/tcmalloc.h",
+    "include/gperftools/heap-checker.h",
+    "include/gperftools/heap-profiler.h",
+    "include/gperftools/malloc_extension.h",
+    "include/gperftools/malloc_extension_c.h",
+    "include/gperftools/malloc_hook.h",
+    "include/gperftools/malloc_hook_c.h",
+    "include/gperftools/nallocx.h",
+    "include/gperftools/profiler.h",
+    "include/gperftools/stacktrace.h",
+    "include/gperftools/tcmalloc.h",
+    "lib/libprofiler.a",
+    "lib/libprofiler.la",
+    "lib/libprofiler.so",
+    "lib/libprofiler.so.0",
+    "lib/libprofiler.so.0.4.18",
+    "lib/libtcmalloc.a",
+    "lib/libtcmalloc.la",
+    "lib/libtcmalloc.so",
+    "lib/libtcmalloc.so.4",
+    "lib/libtcmalloc.so.4.5.3",
+    "lib/libtcmalloc_and_profiler.a",
+    "lib/libtcmalloc_and_profiler.la",
+    "lib/libtcmalloc_and_profiler.so",
+    "lib/libtcmalloc_and_profiler.so.4",
+    "lib/libtcmalloc_and_profiler.so.4.5.3",
+    "lib/libtcmalloc_debug.a",
+    "lib/libtcmalloc_debug.la",
+    "lib/libtcmalloc_debug.so",
+    "lib/libtcmalloc_debug.so.4",
+    "lib/libtcmalloc_debug.so.4.5.3",
+    "lib/libtcmalloc_minimal.a",
+    "lib/libtcmalloc_minimal.la",
+    "lib/libtcmalloc_minimal.so",
+    "lib/libtcmalloc_minimal.so.4",
+    "lib/libtcmalloc_minimal.so.4.5.3",
+    "lib/libtcmalloc_minimal_debug.a",
+    "lib/libtcmalloc_minimal_debug.la",
+    "lib/libtcmalloc_minimal_debug.so",
+    "lib/libtcmalloc_minimal_debug.so.4",
+    "lib/libtcmalloc_minimal_debug.so.4.5.3",
+    "lib/pkgconfig/libprofiler.pc",
+    "lib/pkgconfig/libtcmalloc.pc",
+    "lib/pkgconfig/libtcmalloc_debug.pc",
+    "lib/pkgconfig/libtcmalloc_minimal.pc",
+    "lib/pkgconfig/libtcmalloc_minimal_debug.pc",
+    "share/doc/gperftools/AUTHORS",
+    "share/doc/gperftools/COPYING",
+    "share/doc/gperftools/ChangeLog",
+    "share/doc/gperftools/ChangeLog.old",
+    "share/doc/gperftools/INSTALL",
+    "share/doc/gperftools/NEWS",
+    "share/doc/gperftools/README",
+    "share/doc/gperftools/README_windows.txt",
+    "share/doc/gperftools/TODO",
+    "share/doc/gperftools/cpuprofile-fileformat.html",
+    "share/doc/gperftools/cpuprofile.html",
+    "share/doc/gperftools/designstyle.css",
+    "share/doc/gperftools/heap-example1.png",
+    "share/doc/gperftools/heap_checker.html",
+    "share/doc/gperftools/heapprofile.html",
+    "share/doc/gperftools/index.html",
+    "share/doc/gperftools/overview.dot",
+    "share/doc/gperftools/overview.gif",
+    "share/doc/gperftools/pageheap.dot",
+    "share/doc/gperftools/pageheap.gif",
+    "share/doc/gperftools/pprof-test-big.gif",
+    "share/doc/gperftools/pprof-test.gif",
+    "share/doc/gperftools/pprof-vsnprintf-big.gif",
+    "share/doc/gperftools/pprof-vsnprintf.gif",
+    "share/doc/gperftools/pprof_remote_servers.html",
+    "share/doc/gperftools/spanmap.dot",
+    "share/doc/gperftools/spanmap.gif",
+    "share/doc/gperftools/t-test1.times.txt",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.1024.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.128.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.131072.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.16384.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.2048.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.256.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.32768.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.4096.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.512.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.64.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.65536.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.8192.bytes.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.1.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.12.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.16.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.2.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.20.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.3.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.4.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.5.threads.png",
+    "share/doc/gperftools/tcmalloc-opspersec.vs.size.8.threads.png",
+    "share/doc/gperftools/tcmalloc.html",
+    "share/doc/gperftools/threadheap.dot",
+    "share/doc/gperftools/threadheap.gif",
+    "share/man/man1/pprof.1"
+  ],
+  "fn": "gperftools-2.7-h767d802_2.tar.bz2",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "link": {
+    "source": "/home/hieu/anaconda3/pkgs/gperftools-2.7-h767d802_2",
+    "type": 1
+  },
+  "md5": "e5f182d83bdf062ea1f6ef500d73ec52",
+  "name": "gperftools",
+  "package_tarball_full_path": "/home/hieu/anaconda3/pkgs/gperftools-2.7-h767d802_2.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "bin/pprof",
+        "path_type": "hardlink",
+        "sha256": "ac2003a99fec3503ffa3c4b3cccbb18a2f2176b8a20fa7a70de4fa041c89034a",
+        "sha256_in_prefix": "ac2003a99fec3503ffa3c4b3cccbb18a2f2176b8a20fa7a70de4fa041c89034a",
+        "size_in_bytes": 178257
+      },
+      {
+        "_path": "include/google/heap-checker.h",
+        "path_type": "hardlink",
+        "sha256": "5e17b1c99d25e9a658771eb85c9d6ec075eac1e85246306c86ef7c8f773d23c9",
+        "sha256_in_prefix": "5e17b1c99d25e9a658771eb85c9d6ec075eac1e85246306c86ef7c8f773d23c9",
+        "size_in_bytes": 1848
+      },
+      {
+        "_path": "include/google/heap-profiler.h",
+        "path_type": "hardlink",
+        "sha256": "8bd58bf65915628d1944c6a16892a3f5f21908e961809703b1bcb5ddef48348a",
+        "sha256_in_prefix": "8bd58bf65915628d1944c6a16892a3f5f21908e961809703b1bcb5ddef48348a",
+        "size_in_bytes": 1858
+      },
+      {
+        "_path": "include/google/malloc_extension.h",
+        "path_type": "hardlink",
+        "sha256": "d74568d998204df59f48441f3d55159f152a501a2dc1ef8ff05e487c4b032f6f",
+        "sha256_in_prefix": "d74568d998204df59f48441f3d55159f152a501a2dc1ef8ff05e487c4b032f6f",
+        "size_in_bytes": 1863
+      },
+      {
+        "_path": "include/google/malloc_extension_c.h",
+        "path_type": "hardlink",
+        "sha256": "cefea8a97a319bfebddb3a703dab05e295d3ba24493c46283196e37aa3e76e30",
+        "sha256_in_prefix": "cefea8a97a319bfebddb3a703dab05e295d3ba24493c46283196e37aa3e76e30",
+        "size_in_bytes": 1873
+      },
+      {
+        "_path": "include/google/malloc_hook.h",
+        "path_type": "hardlink",
+        "sha256": "c1797812c1fa75cb3d303dd9bbc140c88b171f2d03c5ef40f360092d2ec8eb60",
+        "sha256_in_prefix": "c1797812c1fa75cb3d303dd9bbc140c88b171f2d03c5ef40f360092d2ec8eb60",
+        "size_in_bytes": 1848
+      },
+      {
+        "_path": "include/google/malloc_hook_c.h",
+        "path_type": "hardlink",
+        "sha256": "0a705b0b20ae72353b6e961c2ead8c72e3261bf4e1e1e6fe9f1bf1518b330906",
+        "sha256_in_prefix": "0a705b0b20ae72353b6e961c2ead8c72e3261bf4e1e1e6fe9f1bf1518b330906",
+        "size_in_bytes": 1858
+      },
+      {
+        "_path": "include/google/profiler.h",
+        "path_type": "hardlink",
+        "sha256": "687e1bbffc62e9818c1155d9e8bdfecd18b144ff7e991aeb2b7e012eb55775fc",
+        "sha256_in_prefix": "687e1bbffc62e9818c1155d9e8bdfecd18b144ff7e991aeb2b7e012eb55775fc",
+        "size_in_bytes": 1843
+      },
+      {
+        "_path": "include/google/stacktrace.h",
+        "path_type": "hardlink",
+        "sha256": "35a486b79dfd35a41a38492ce46f77f51dfdb40eb5a39871c0fdc066f685e452",
+        "sha256_in_prefix": "35a486b79dfd35a41a38492ce46f77f51dfdb40eb5a39871c0fdc066f685e452",
+        "size_in_bytes": 1845
+      },
+      {
+        "_path": "include/google/tcmalloc.h",
+        "path_type": "hardlink",
+        "sha256": "79f11cf9c0072b7ed44b8cd872bfbb8f6c8faaa9dabf30461e9847c90a7f8f4a",
+        "sha256_in_prefix": "79f11cf9c0072b7ed44b8cd872bfbb8f6c8faaa9dabf30461e9847c90a7f8f4a",
+        "size_in_bytes": 1843
+      },
+      {
+        "_path": "include/gperftools/heap-checker.h",
+        "path_type": "hardlink",
+        "sha256": "d90e6b61418bb043e802ad3d292faebe60bae345bbbf9ec0bcf7f3ed5965095c",
+        "sha256_in_prefix": "d90e6b61418bb043e802ad3d292faebe60bae345bbbf9ec0bcf7f3ed5965095c",
+        "size_in_bytes": 17703
+      },
+      {
+        "_path": "include/gperftools/heap-profiler.h",
+        "path_type": "hardlink",
+        "sha256": "1df50af592e98b2696d81ca0211ce4247d9c896693b1fe6e2aacfa049da8dc8d",
+        "sha256_in_prefix": "1df50af592e98b2696d81ca0211ce4247d9c896693b1fe6e2aacfa049da8dc8d",
+        "size_in_bytes": 4027
+      },
+      {
+        "_path": "include/gperftools/malloc_extension.h",
+        "path_type": "hardlink",
+        "sha256": "ce31111111239432e59e0b91e6eb80c171c4133d1871c90d3950bc34488209f1",
+        "sha256_in_prefix": "ce31111111239432e59e0b91e6eb80c171c4133d1871c90d3950bc34488209f1",
+        "size_in_bytes": 19469
+      },
+      {
+        "_path": "include/gperftools/malloc_extension_c.h",
+        "path_type": "hardlink",
+        "sha256": "ec36cfe3f0f8f513ff429e9c562ddce0c88be34afec8d2e72990e5681958f996",
+        "sha256_in_prefix": "ec36cfe3f0f8f513ff429e9c562ddce0c88be34afec8d2e72990e5681958f996",
+        "size_in_bytes": 4201
+      },
+      {
+        "_path": "include/gperftools/malloc_hook.h",
+        "path_type": "hardlink",
+        "sha256": "21f7b3081e6e3dcca5da41a26ba37feb0306ee21b2c6b3a43ac05c8773933d4f",
+        "sha256_in_prefix": "21f7b3081e6e3dcca5da41a26ba37feb0306ee21b2c6b3a43ac05c8773933d4f",
+        "size_in_bytes": 15372
+      },
+      {
+        "_path": "include/gperftools/malloc_hook_c.h",
+        "path_type": "hardlink",
+        "sha256": "0d36f3b0d3a20e777ba0b17fc146e7ef081955c73b6187b07b7882948f5f8f28",
+        "sha256_in_prefix": "0d36f3b0d3a20e777ba0b17fc146e7ef081955c73b6187b07b7882948f5f8f28",
+        "size_in_bytes": 6905
+      },
+      {
+        "_path": "include/gperftools/nallocx.h",
+        "path_type": "hardlink",
+        "sha256": "1f7258e62c06760b0dd61d7f10caf266a61f2e1d4996bcce82d2906b0d289e37",
+        "sha256_in_prefix": "1f7258e62c06760b0dd61d7f10caf266a61f2e1d4996bcce82d2906b0d289e37",
+        "size_in_bytes": 936
+      },
+      {
+        "_path": "include/gperftools/profiler.h",
+        "path_type": "hardlink",
+        "sha256": "031706abf438e8d40ef3b356b59e04235ed01dc1e662bf745751ec7e144d2679",
+        "sha256_in_prefix": "031706abf438e8d40ef3b356b59e04235ed01dc1e662bf745751ec7e144d2679",
+        "size_in_bytes": 6273
+      },
+      {
+        "_path": "include/gperftools/stacktrace.h",
+        "path_type": "hardlink",
+        "sha256": "714aeca242e2172008dbe7707bce3a3ddac427790e0f37ce6fd7490d63c5d54d",
+        "sha256_in_prefix": "714aeca242e2172008dbe7707bce3a3ddac427790e0f37ce6fd7490d63c5d54d",
+        "size_in_bytes": 4955
+      },
+      {
+        "_path": "include/gperftools/tcmalloc.h",
+        "path_type": "hardlink",
+        "sha256": "e43c79274bfb02e8bff9a7d914b9fc9e5b9711d3d8c1ae18b1f539a3435299f8",
+        "sha256_in_prefix": "e43c79274bfb02e8bff9a7d914b9fc9e5b9711d3d8c1ae18b1f539a3435299f8",
+        "size_in_bytes": 7104
+      },
+      {
+        "_path": "lib/libprofiler.a",
+        "path_type": "hardlink",
+        "sha256": "d49aabffc303c53ee7a3cf85004ccfd8c783be49ec286dfa6621205aec3ecebe",
+        "sha256_in_prefix": "d49aabffc303c53ee7a3cf85004ccfd8c783be49ec286dfa6621205aec3ecebe",
+        "size_in_bytes": 189822
+      },
+      {
+        "_path": "lib/libprofiler.la",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "2ce79f5b33850cb1e7e04a00015907ef39eb9b8118be4834c90b7f61f60d2370",
+        "sha256_in_prefix": "9870967e603ce3b6fb017a800ab97286cfe62b5ab148446a785b0524f45226fd",
+        "size_in_bytes": 1057
+      },
+      {
+        "_path": "lib/libprofiler.so",
+        "path_type": "softlink",
+        "sha256": "2698b0b988da4a8f8f26d54501d9a000cb6a275f43d78f411ef664c540ae86ca",
+        "size_in_bytes": 97305
+      },
+      {
+        "_path": "lib/libprofiler.so.0",
+        "path_type": "softlink",
+        "sha256": "2698b0b988da4a8f8f26d54501d9a000cb6a275f43d78f411ef664c540ae86ca",
+        "size_in_bytes": 97305
+      },
+      {
+        "_path": "lib/libprofiler.so.0.4.18",
+        "path_type": "hardlink",
+        "sha256": "2698b0b988da4a8f8f26d54501d9a000cb6a275f43d78f411ef664c540ae86ca",
+        "sha256_in_prefix": "2698b0b988da4a8f8f26d54501d9a000cb6a275f43d78f411ef664c540ae86ca",
+        "size_in_bytes": 97305
+      },
+      {
+        "_path": "lib/libtcmalloc.a",
+        "path_type": "hardlink",
+        "sha256": "a0dd46acb5c4c48dd35388fd41a46895fc64604f3a60ac033f993c817cf3405e",
+        "sha256_in_prefix": "a0dd46acb5c4c48dd35388fd41a46895fc64604f3a60ac033f993c817cf3405e",
+        "size_in_bytes": 1718452
+      },
+      {
+        "_path": "lib/libtcmalloc.la",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "8fb65f8e16e1c70011bbbac2e8c4c8adef515024d99e43a84b1e4b2ea19ca177",
+        "sha256_in_prefix": "8b23cd294a960a1d24efbc635f71f15a0cc52c011d8f9db5afb0799863639f9b",
+        "size_in_bytes": 1074
+      },
+      {
+        "_path": "lib/libtcmalloc.so",
+        "path_type": "softlink",
+        "sha256": "ddfe87c4e16d65ec6fc2a80c74620f84ff077da2a1a59e640c14f15c42dc244b",
+        "size_in_bytes": 932949
+      },
+      {
+        "_path": "lib/libtcmalloc.so.4",
+        "path_type": "softlink",
+        "sha256": "ddfe87c4e16d65ec6fc2a80c74620f84ff077da2a1a59e640c14f15c42dc244b",
+        "size_in_bytes": 932949
+      },
+      {
+        "_path": "lib/libtcmalloc.so.4.5.3",
+        "path_type": "hardlink",
+        "sha256": "ddfe87c4e16d65ec6fc2a80c74620f84ff077da2a1a59e640c14f15c42dc244b",
+        "sha256_in_prefix": "ddfe87c4e16d65ec6fc2a80c74620f84ff077da2a1a59e640c14f15c42dc244b",
+        "size_in_bytes": 932949
+      },
+      {
+        "_path": "lib/libtcmalloc_and_profiler.a",
+        "path_type": "hardlink",
+        "sha256": "92d9360077415004979bc124fc981814847c530056b237af00386b05abe2bde5",
+        "sha256_in_prefix": "92d9360077415004979bc124fc981814847c530056b237af00386b05abe2bde5",
+        "size_in_bytes": 1809596
+      },
+      {
+        "_path": "lib/libtcmalloc_and_profiler.la",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "4da301a1aaf234e119d2fb6e2bf9a60164f6c4c2c317da60b89b8b6bffc2a757",
+        "sha256_in_prefix": "5ee12daa16208e80e1999d9df4aebe957991a04f1b5a440ec6f6638d79adccb3",
+        "size_in_bytes": 1165
+      },
+      {
+        "_path": "lib/libtcmalloc_and_profiler.so",
+        "path_type": "softlink",
+        "sha256": "a90a458a8ed80f18ed9871861a46fe9670025142003d314b3411e41e66ee7156",
+        "size_in_bytes": 977214
+      },
+      {
+        "_path": "lib/libtcmalloc_and_profiler.so.4",
+        "path_type": "softlink",
+        "sha256": "a90a458a8ed80f18ed9871861a46fe9670025142003d314b3411e41e66ee7156",
+        "size_in_bytes": 977214
+      },
+      {
+        "_path": "lib/libtcmalloc_and_profiler.so.4.5.3",
+        "path_type": "hardlink",
+        "sha256": "a90a458a8ed80f18ed9871861a46fe9670025142003d314b3411e41e66ee7156",
+        "sha256_in_prefix": "a90a458a8ed80f18ed9871861a46fe9670025142003d314b3411e41e66ee7156",
+        "size_in_bytes": 977214
+      },
+      {
+        "_path": "lib/libtcmalloc_debug.a",
+        "path_type": "hardlink",
+        "sha256": "95a8038c3e6a29db5de3701e8c5f91ade3744a94c5863915f44dd044483d215b",
+        "sha256_in_prefix": "95a8038c3e6a29db5de3701e8c5f91ade3744a94c5863915f44dd044483d215b",
+        "size_in_bytes": 1784554
+      },
+      {
+        "_path": "lib/libtcmalloc_debug.la",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "cbd5588465f7bb1e447488270cde1ee795f876942865e36a9213261b59f06944",
+        "sha256_in_prefix": "11691d90878b86af104505cdd19d2c583c4b401ecdd8d8112e6f2470ffb2cfaa",
+        "size_in_bytes": 1116
+      },
+      {
+        "_path": "lib/libtcmalloc_debug.so",
+        "path_type": "softlink",
+        "sha256": "9d18b871769b94110f402e86c5bab4b36cf63c47ae79b66bac8417fec4b89b4f",
+        "size_in_bytes": 961596
+      },
+      {
+        "_path": "lib/libtcmalloc_debug.so.4",
+        "path_type": "softlink",
+        "sha256": "9d18b871769b94110f402e86c5bab4b36cf63c47ae79b66bac8417fec4b89b4f",
+        "size_in_bytes": 961596
+      },
+      {
+        "_path": "lib/libtcmalloc_debug.so.4.5.3",
+        "path_type": "hardlink",
+        "sha256": "9d18b871769b94110f402e86c5bab4b36cf63c47ae79b66bac8417fec4b89b4f",
+        "sha256_in_prefix": "9d18b871769b94110f402e86c5bab4b36cf63c47ae79b66bac8417fec4b89b4f",
+        "size_in_bytes": 961596
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal.a",
+        "path_type": "hardlink",
+        "sha256": "7b2c89060e7c2b6f14cbe000aaa616088ed1bcbd50d1e73431e3a3a67f88f57d",
+        "sha256_in_prefix": "7b2c89060e7c2b6f14cbe000aaa616088ed1bcbd50d1e73431e3a3a67f88f57d",
+        "size_in_bytes": 731856
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal.la",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "f1c888a4ee0be4faac47847da5f2f81c01948b604d38e634d04552eba6e949ad",
+        "sha256_in_prefix": "a0c5be406627016303b569fb4d8784201e973466d639ece0d351fe5bf3b1f3a7",
+        "size_in_bytes": 1070
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal.so",
+        "path_type": "softlink",
+        "sha256": "763f53a182eb10bfc420ef1d0ba56d1ced0afafd3a7d4999995e59783c8a93c8",
+        "size_in_bytes": 391750
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal.so.4",
+        "path_type": "softlink",
+        "sha256": "763f53a182eb10bfc420ef1d0ba56d1ced0afafd3a7d4999995e59783c8a93c8",
+        "size_in_bytes": 391750
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal.so.4.5.3",
+        "path_type": "hardlink",
+        "sha256": "763f53a182eb10bfc420ef1d0ba56d1ced0afafd3a7d4999995e59783c8a93c8",
+        "sha256_in_prefix": "763f53a182eb10bfc420ef1d0ba56d1ced0afafd3a7d4999995e59783c8a93c8",
+        "size_in_bytes": 391750
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal_debug.a",
+        "path_type": "hardlink",
+        "sha256": "1ab0ca262adaaf5165cb52922db37057ff72815a2b98bf0e2c1f6c3d81a74e10",
+        "sha256_in_prefix": "1ab0ca262adaaf5165cb52922db37057ff72815a2b98bf0e2c1f6c3d81a74e10",
+        "size_in_bytes": 797970
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal_debug.la",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "367723bf965f743dadfbe832740342b54ff07d5907974a904d4f396c36fe3969",
+        "sha256_in_prefix": "c47f63ba915913d2c187c60d0c5e535c169a7994888799215e14ba61f7cb132d",
+        "size_in_bytes": 1112
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal_debug.so",
+        "path_type": "softlink",
+        "sha256": "81ce04dde3d31102b618eb98b60c424c9d81b620b731c55ccf27780f784fe03b",
+        "size_in_bytes": 427167
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal_debug.so.4",
+        "path_type": "softlink",
+        "sha256": "81ce04dde3d31102b618eb98b60c424c9d81b620b731c55ccf27780f784fe03b",
+        "size_in_bytes": 427167
+      },
+      {
+        "_path": "lib/libtcmalloc_minimal_debug.so.4.5.3",
+        "path_type": "hardlink",
+        "sha256": "81ce04dde3d31102b618eb98b60c424c9d81b620b731c55ccf27780f784fe03b",
+        "sha256_in_prefix": "81ce04dde3d31102b618eb98b60c424c9d81b620b731c55ccf27780f784fe03b",
+        "size_in_bytes": 427167
+      },
+      {
+        "_path": "lib/pkgconfig/libprofiler.pc",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "c998ba8be5210c0a76caa0b08ab30e8c00cb9f8f3512b119d835eae0c55b74d9",
+        "sha256_in_prefix": "b76bfe6cded9257b88e292b20a347656b2e1ff30c29c3448037111d53cf2575d",
+        "size_in_bytes": 325
+      },
+      {
+        "_path": "lib/pkgconfig/libtcmalloc.pc",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "546bbc610fd3fd289fc9a949b75d78fd485d63ce343c0cf5477bcef8b4036372",
+        "sha256_in_prefix": "5566468bd1ec4ab5e8ec8aff4f33df1bcb3be5603b002bcdf4eabe6d687c6b3e",
+        "size_in_bytes": 325
+      },
+      {
+        "_path": "lib/pkgconfig/libtcmalloc_debug.pc",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "49de615de671be4be4ad7f4972f662ab1fe0ea2e5040910d6add2b91f35490f7",
+        "sha256_in_prefix": "fd637ca91bbe653e0c5fe2d261f1de13b824ef806429e38a704cd95e987b2da4",
+        "size_in_bytes": 331
+      },
+      {
+        "_path": "lib/pkgconfig/libtcmalloc_minimal.pc",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "2573d5cddf0e1cf819b061791bb1a62087f1fa03f30c5b693da8fd2bac42f60a",
+        "sha256_in_prefix": "299a42985ed731665b302e46a65d5fa9086b69317c4594964c7c03c063edcb9e",
+        "size_in_bytes": 333
+      },
+      {
+        "_path": "lib/pkgconfig/libtcmalloc_minimal_debug.pc",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/anaconda1anaconda2anaconda3",
+        "sha256": "962a71c609613218eb4728d637c0c880006ba74688587b10047934f7e624d9a6",
+        "sha256_in_prefix": "73352438b22250937bd92e9301f765f88f9804c3c5044a32e07ddd31407637fd",
+        "size_in_bytes": 339
+      },
+      {
+        "_path": "share/doc/gperftools/AUTHORS",
+        "path_type": "hardlink",
+        "sha256": "0f67481b8f655a65ec97bfa9eba7ad704261997e93ed671d1f4b57805df7d001",
+        "sha256_in_prefix": "0f67481b8f655a65ec97bfa9eba7ad704261997e93ed671d1f4b57805df7d001",
+        "size_in_bytes": 35
+      },
+      {
+        "_path": "share/doc/gperftools/COPYING",
+        "path_type": "hardlink",
+        "sha256": "81ebf38708899097aacaac9723679b3ffa17640c14cd3193c46b75197de18b2c",
+        "sha256_in_prefix": "81ebf38708899097aacaac9723679b3ffa17640c14cd3193c46b75197de18b2c",
+        "size_in_bytes": 1479
+      },
+      {
+        "_path": "share/doc/gperftools/ChangeLog",
+        "path_type": "hardlink",
+        "sha256": "7b58829fb69c8ff1166b7d28f363908fb692889063df5b07dfe3f88362ca7129",
+        "sha256_in_prefix": "7b58829fb69c8ff1166b7d28f363908fb692889063df5b07dfe3f88362ca7129",
+        "size_in_bytes": 118
+      },
+      {
+        "_path": "share/doc/gperftools/ChangeLog.old",
+        "path_type": "hardlink",
+        "sha256": "1b1f20c54da28f72f7c04fd237b3e18c8b3d67239722333869c051e80b67fed8",
+        "sha256_in_prefix": "1b1f20c54da28f72f7c04fd237b3e18c8b3d67239722333869c051e80b67fed8",
+        "size_in_bytes": 34478
+      },
+      {
+        "_path": "share/doc/gperftools/INSTALL",
+        "path_type": "hardlink",
+        "sha256": "b2f09b207af11e5ae130e8c4fd77b7087d7f123b9d5136bc597502184ef90fb7",
+        "sha256_in_prefix": "b2f09b207af11e5ae130e8c4fd77b7087d7f123b9d5136bc597502184ef90fb7",
+        "size_in_bytes": 24185
+      },
+      {
+        "_path": "share/doc/gperftools/NEWS",
+        "path_type": "hardlink",
+        "sha256": "8859f366dc8c1fc6cf8656194432490ce38e26bf1e274480ee652529fc1afe79",
+        "sha256_in_prefix": "8859f366dc8c1fc6cf8656194432490ce38e26bf1e274480ee652529fc1afe79",
+        "size_in_bytes": 37525
+      },
+      {
+        "_path": "share/doc/gperftools/README",
+        "path_type": "hardlink",
+        "sha256": "ac71b704d144bf543b935731455999a26b9ee28cbe7c2c2627bbc0efb2a416de",
+        "sha256_in_prefix": "ac71b704d144bf543b935731455999a26b9ee28cbe7c2c2627bbc0efb2a416de",
+        "size_in_bytes": 11316
+      },
+      {
+        "_path": "share/doc/gperftools/README_windows.txt",
+        "path_type": "hardlink",
+        "sha256": "30ab31e98e9d0aef8a66cf76ea9aba721e28fe50b1a773c2b6abb8a9bec53de2",
+        "sha256_in_prefix": "30ab31e98e9d0aef8a66cf76ea9aba721e28fe50b1a773c2b6abb8a9bec53de2",
+        "size_in_bytes": 5656
+      },
+      {
+        "_path": "share/doc/gperftools/TODO",
+        "path_type": "hardlink",
+        "sha256": "633011e81f194d3abc7b00d3490e8a3b8b406a41b4243b082b08d83dd0883a7e",
+        "sha256_in_prefix": "633011e81f194d3abc7b00d3490e8a3b8b406a41b4243b082b08d83dd0883a7e",
+        "size_in_bytes": 1654
+      },
+      {
+        "_path": "share/doc/gperftools/cpuprofile-fileformat.html",
+        "path_type": "hardlink",
+        "sha256": "331991575e1d144e73d8c6d01b8008507b3160011be773c8c1f0d55c2cf5e7db",
+        "sha256_in_prefix": "331991575e1d144e73d8c6d01b8008507b3160011be773c8c1f0d55c2cf5e7db",
+        "size_in_bytes": 6755
+      },
+      {
+        "_path": "share/doc/gperftools/cpuprofile.html",
+        "path_type": "hardlink",
+        "sha256": "d0554addbce4876ea0a3f380675fc9293b1579e86502630303905076b19e892b",
+        "sha256_in_prefix": "d0554addbce4876ea0a3f380675fc9293b1579e86502630303905076b19e892b",
+        "size_in_bytes": 19155
+      },
+      {
+        "_path": "share/doc/gperftools/designstyle.css",
+        "path_type": "hardlink",
+        "sha256": "dc90d3b4b1aee13f7d5b9e25901b29c56ed3eb4f85386beeecdc060607cf4950",
+        "sha256_in_prefix": "dc90d3b4b1aee13f7d5b9e25901b29c56ed3eb4f85386beeecdc060607cf4950",
+        "size_in_bytes": 1992
+      },
+      {
+        "_path": "share/doc/gperftools/heap-example1.png",
+        "path_type": "hardlink",
+        "sha256": "50099c8acf7b40eaf69202990aa9e457ce0e2594f2a632776eaea7492d87ef62",
+        "sha256_in_prefix": "50099c8acf7b40eaf69202990aa9e457ce0e2594f2a632776eaea7492d87ef62",
+        "size_in_bytes": 37619
+      },
+      {
+        "_path": "share/doc/gperftools/heap_checker.html",
+        "path_type": "hardlink",
+        "sha256": "c37c0c0d4867e30dc35051494c532789b8db1efa938ccbfddf32ded4c7958ddb",
+        "sha256_in_prefix": "c37c0c0d4867e30dc35051494c532789b8db1efa938ccbfddf32ded4c7958ddb",
+        "size_in_bytes": 21171
+      },
+      {
+        "_path": "share/doc/gperftools/heapprofile.html",
+        "path_type": "hardlink",
+        "sha256": "225b3d8d61fc817d521395808e3934c9608c8ad94469ddd4bea5249c6fdf098c",
+        "sha256_in_prefix": "225b3d8d61fc817d521395808e3934c9608c8ad94469ddd4bea5249c6fdf098c",
+        "size_in_bytes": 13638
+      },
+      {
+        "_path": "share/doc/gperftools/index.html",
+        "path_type": "hardlink",
+        "sha256": "273d37234cc83c237a29b3f35259cfa6953b59ad8d2eb86082ae9c54d33f373e",
+        "sha256_in_prefix": "273d37234cc83c237a29b3f35259cfa6953b59ad8d2eb86082ae9c54d33f373e",
+        "size_in_bytes": 379
+      },
+      {
+        "_path": "share/doc/gperftools/overview.dot",
+        "path_type": "hardlink",
+        "sha256": "64f736d03b7939426cba9e4930580a53448acabcff8dd856589018a6f7ab5ea0",
+        "sha256_in_prefix": "64f736d03b7939426cba9e4930580a53448acabcff8dd856589018a6f7ab5ea0",
+        "size_in_bytes": 239
+      },
+      {
+        "_path": "share/doc/gperftools/overview.gif",
+        "path_type": "hardlink",
+        "sha256": "1b8e678aaf80c346a327661e182a60b92c1273757911cc2ce4c1549e4d4c4287",
+        "sha256_in_prefix": "1b8e678aaf80c346a327661e182a60b92c1273757911cc2ce4c1549e4d4c4287",
+        "size_in_bytes": 6472
+      },
+      {
+        "_path": "share/doc/gperftools/pageheap.dot",
+        "path_type": "hardlink",
+        "sha256": "b0c0c22589eecf897edad726fc6d90c5dbb27cf4f0f84ea06e41d82698e5b4c5",
+        "sha256_in_prefix": "b0c0c22589eecf897edad726fc6d90c5dbb27cf4f0f84ea06e41d82698e5b4c5",
+        "size_in_bytes": 691
+      },
+      {
+        "_path": "share/doc/gperftools/pageheap.gif",
+        "path_type": "hardlink",
+        "sha256": "d6bf0ac3377ecfb3980c6bc066cc32e2f234859a0ac35bc1016f1b58a15255f0",
+        "sha256_in_prefix": "d6bf0ac3377ecfb3980c6bc066cc32e2f234859a0ac35bc1016f1b58a15255f0",
+        "size_in_bytes": 5942
+      },
+      {
+        "_path": "share/doc/gperftools/pprof-test-big.gif",
+        "path_type": "hardlink",
+        "sha256": "ad9926c163ceb928915610c98b8c4986b215129ea611232f45a54051a32a72d4",
+        "sha256_in_prefix": "ad9926c163ceb928915610c98b8c4986b215129ea611232f45a54051a32a72d4",
+        "size_in_bytes": 111566
+      },
+      {
+        "_path": "share/doc/gperftools/pprof-test.gif",
+        "path_type": "hardlink",
+        "sha256": "6e45f9440f2bc2a211444dd656068b1a916637d38567e447834fa24b9064f63c",
+        "sha256_in_prefix": "6e45f9440f2bc2a211444dd656068b1a916637d38567e447834fa24b9064f63c",
+        "size_in_bytes": 56995
+      },
+      {
+        "_path": "share/doc/gperftools/pprof-vsnprintf-big.gif",
+        "path_type": "hardlink",
+        "sha256": "7625e890a0ac59bd33ee4580a93a776ccefaf7189d07edff82b59bbdc8380a25",
+        "sha256_in_prefix": "7625e890a0ac59bd33ee4580a93a776ccefaf7189d07edff82b59bbdc8380a25",
+        "size_in_bytes": 100721
+      },
+      {
+        "_path": "share/doc/gperftools/pprof-vsnprintf.gif",
+        "path_type": "hardlink",
+        "sha256": "1bdf8e5c662af8eb3d0e0ad405971bfbc93cc9b58896bbb323c19865e6157c0f",
+        "sha256_in_prefix": "1bdf8e5c662af8eb3d0e0ad405971bfbc93cc9b58896bbb323c19865e6157c0f",
+        "size_in_bytes": 31054
+      },
+      {
+        "_path": "share/doc/gperftools/pprof_remote_servers.html",
+        "path_type": "hardlink",
+        "sha256": "8b0a3091bb0dff08446757a15a8353051ec87341d632dc1f2cafccfcf6d378ac",
+        "sha256_in_prefix": "8b0a3091bb0dff08446757a15a8353051ec87341d632dc1f2cafccfcf6d378ac",
+        "size_in_bytes": 11300
+      },
+      {
+        "_path": "share/doc/gperftools/spanmap.dot",
+        "path_type": "hardlink",
+        "sha256": "320786622c3826cc2b4d41264c9ce1d852751c3b98b3b54d9c0e2a2d938cdd0a",
+        "sha256_in_prefix": "320786622c3826cc2b4d41264c9ce1d852751c3b98b3b54d9c0e2a2d938cdd0a",
+        "size_in_bytes": 371
+      },
+      {
+        "_path": "share/doc/gperftools/spanmap.gif",
+        "path_type": "hardlink",
+        "sha256": "97b0d0fbc6c72e1c24f54a54b7c13ec041f52e288e10d3e31f40b24ef94d3b47",
+        "sha256_in_prefix": "97b0d0fbc6c72e1c24f54a54b7c13ec041f52e288e10d3e31f40b24ef94d3b47",
+        "size_in_bytes": 8482
+      },
+      {
+        "_path": "share/doc/gperftools/t-test1.times.txt",
+        "path_type": "hardlink",
+        "sha256": "8d4fb2ba926573e7f57301243cdd676b10eaf81bceb5d71f4819b2ed28435b79",
+        "sha256_in_prefix": "8d4fb2ba926573e7f57301243cdd676b10eaf81bceb5d71f4819b2ed28435b79",
+        "size_in_bytes": 31850
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.1024.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "b209bb3fb683f0f063d13d2ffd642751a19228514017c87d2bec805991427d10",
+        "sha256_in_prefix": "b209bb3fb683f0f063d13d2ffd642751a19228514017c87d2bec805991427d10",
+        "size_in_bytes": 1882
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.128.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "12e7bc61be014d5fc93c1e5287a3fb047ed70212d010e8cbf88665dfb89f5f21",
+        "sha256_in_prefix": "12e7bc61be014d5fc93c1e5287a3fb047ed70212d010e8cbf88665dfb89f5f21",
+        "size_in_bytes": 1731
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.131072.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "84d5af77e9ae7286256cecaab7ed507ba02912ce8227c0d4741210d250caf13d",
+        "sha256_in_prefix": "84d5af77e9ae7286256cecaab7ed507ba02912ce8227c0d4741210d250caf13d",
+        "size_in_bytes": 1314
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.16384.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "48610576d6a8247ae9c5d7e1beb5ceadb1554e4299cd1befa817142dece9abcd",
+        "sha256_in_prefix": "48610576d6a8247ae9c5d7e1beb5ceadb1554e4299cd1befa817142dece9abcd",
+        "size_in_bytes": 1815
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.2048.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "b4c6e85c3b9df5e1e352b20b3684af9245f7ac7ae5f9918e650c61b0a94743e8",
+        "sha256_in_prefix": "b4c6e85c3b9df5e1e352b20b3684af9245f7ac7ae5f9918e650c61b0a94743e8",
+        "size_in_bytes": 1877
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.256.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "87edbe78f7dd85bbddd1d9e71e89206159e85ae23c4f6b752fd0b23c0b33ff12",
+        "sha256_in_prefix": "87edbe78f7dd85bbddd1d9e71e89206159e85ae23c4f6b752fd0b23c0b33ff12",
+        "size_in_bytes": 1838
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.32768.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "9cd5d3c453edafa9bfdcff9b60283a50a3c146d1633881b162b9a61b9675bc1f",
+        "sha256_in_prefix": "9cd5d3c453edafa9bfdcff9b60283a50a3c146d1633881b162b9a61b9675bc1f",
+        "size_in_bytes": 1516
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.4096.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "6a84fb66f02231946f81e4f6b4552f3701fd7f94d707f48aebb392f2feab393a",
+        "sha256_in_prefix": "6a84fb66f02231946f81e4f6b4552f3701fd7f94d707f48aebb392f2feab393a",
+        "size_in_bytes": 2005
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.512.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "e91f79f88f538b4ff40d689cd888424c6d16ff398d28a1b7db271de7756219b9",
+        "sha256_in_prefix": "e91f79f88f538b4ff40d689cd888424c6d16ff398d28a1b7db271de7756219b9",
+        "size_in_bytes": 1683
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.64.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "8d56f2c21c05284f309c19e7335ae225a22bdc7174aed7e3d3a130ee8f9b7b28",
+        "sha256_in_prefix": "8d56f2c21c05284f309c19e7335ae225a22bdc7174aed7e3d3a130ee8f9b7b28",
+        "size_in_bytes": 1656
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.65536.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "48598eaf02bdb670a882020a4e8b88ff99f0e1e0576b115beb8543d30f8ff7d3",
+        "sha256_in_prefix": "48598eaf02bdb670a882020a4e8b88ff99f0e1e0576b115beb8543d30f8ff7d3",
+        "size_in_bytes": 1498
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspercpusec.vs.threads.8192.bytes.png",
+        "path_type": "hardlink",
+        "sha256": "f2631fad853f489bc2f019b0b767fb94ec9418d6bc2d58f1c2c33a1702e356fa",
+        "sha256_in_prefix": "f2631fad853f489bc2f019b0b767fb94ec9418d6bc2d58f1c2c33a1702e356fa",
+        "size_in_bytes": 1912
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.1.threads.png",
+        "path_type": "hardlink",
+        "sha256": "72956c52954065557f576beb5afc963639201d9b4b57a0a9c4581e0ef6db490f",
+        "sha256_in_prefix": "72956c52954065557f576beb5afc963639201d9b4b57a0a9c4581e0ef6db490f",
+        "size_in_bytes": 1689
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.12.threads.png",
+        "path_type": "hardlink",
+        "sha256": "152fc6ec3882494e991b5eecdafce54ea168f769f7367df4a2a02f97ae129e43",
+        "sha256_in_prefix": "152fc6ec3882494e991b5eecdafce54ea168f769f7367df4a2a02f97ae129e43",
+        "size_in_bytes": 2216
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.16.threads.png",
+        "path_type": "hardlink",
+        "sha256": "2f02ff21b18843f1957e3955a02659d23651e0300887b38f2ef8ff85ccb93220",
+        "sha256_in_prefix": "2f02ff21b18843f1957e3955a02659d23651e0300887b38f2ef8ff85ccb93220",
+        "size_in_bytes": 2010
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.2.threads.png",
+        "path_type": "hardlink",
+        "sha256": "165a7b2144409bf9fb28bd38868a5263230d59e3f2e4ac0d3a2b94d80e65d223",
+        "sha256_in_prefix": "165a7b2144409bf9fb28bd38868a5263230d59e3f2e4ac0d3a2b94d80e65d223",
+        "size_in_bytes": 2163
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.20.threads.png",
+        "path_type": "hardlink",
+        "sha256": "cad4e4e7061019b727959ab06a65fb678d4d9d678ee0b1b7855dd293d9348b6e",
+        "sha256_in_prefix": "cad4e4e7061019b727959ab06a65fb678d4d9d678ee0b1b7855dd293d9348b6e",
+        "size_in_bytes": 2147
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.3.threads.png",
+        "path_type": "hardlink",
+        "sha256": "472bf6eba09d837692818fc460976e6f32637eeeb5c3fc89c51e01cc7b686f14",
+        "sha256_in_prefix": "472bf6eba09d837692818fc460976e6f32637eeeb5c3fc89c51e01cc7b686f14",
+        "size_in_bytes": 2270
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.4.threads.png",
+        "path_type": "hardlink",
+        "sha256": "3035debf159da16c444cb21b6c79d4f48b94b71f2caf4f8bb55f8d0dce327338",
+        "sha256_in_prefix": "3035debf159da16c444cb21b6c79d4f48b94b71f2caf4f8bb55f8d0dce327338",
+        "size_in_bytes": 2174
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.5.threads.png",
+        "path_type": "hardlink",
+        "sha256": "adc0c77157685468c60b1240cadce11c4da73ca622fb5a0e5319d4b6638eb59a",
+        "sha256_in_prefix": "adc0c77157685468c60b1240cadce11c4da73ca622fb5a0e5319d4b6638eb59a",
+        "size_in_bytes": 1995
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc-opspersec.vs.size.8.threads.png",
+        "path_type": "hardlink",
+        "sha256": "03c9bdc4247efd6c679f39389300f15055103dd5c1bde6a16821f9833dbedcf9",
+        "sha256_in_prefix": "03c9bdc4247efd6c679f39389300f15055103dd5c1bde6a16821f9833dbedcf9",
+        "size_in_bytes": 2156
+      },
+      {
+        "_path": "share/doc/gperftools/tcmalloc.html",
+        "path_type": "hardlink",
+        "sha256": "026cc2b41ed2ba941a7fc52cbd415136359b33a35210372d67df696726b2aa14",
+        "sha256_in_prefix": "026cc2b41ed2ba941a7fc52cbd415136359b33a35210372d67df696726b2aa14",
+        "size_in_bytes": 30944
+      },
+      {
+        "_path": "share/doc/gperftools/threadheap.dot",
+        "path_type": "hardlink",
+        "sha256": "1b7ad1f54b50d242703347d3eccef950526142703c64a728dcaf25186d4aebfa",
+        "sha256_in_prefix": "1b7ad1f54b50d242703347d3eccef950526142703c64a728dcaf25186d4aebfa",
+        "size_in_bytes": 444
+      },
+      {
+        "_path": "share/doc/gperftools/threadheap.gif",
+        "path_type": "hardlink",
+        "sha256": "4f1d6c776e2f65f05fa69d29c0f456537652cf36d5b28f67e9f13992b5622e44",
+        "sha256_in_prefix": "4f1d6c776e2f65f05fa69d29c0f456537652cf36d5b28f67e9f13992b5622e44",
+        "size_in_bytes": 7571
+      },
+      {
+        "_path": "share/man/man1/pprof.1",
+        "path_type": "hardlink",
+        "sha256": "57a7d19da60ad51766d89769dcbc9193b8368edd54a866467ab2557dad804575",
+        "sha256_in_prefix": "57a7d19da60ad51766d89769dcbc9193b8368edd54a866467ab2557dad804575",
+        "size_in_bytes": 2837
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "af2c85af2c3c8da9645bd64d492c653f1e90467f08467353b38ba0c25061a9e2",
+  "size": 2359781,
+  "subdir": "linux-64",
+  "timestamp": 1535075616225,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/linux-64/gperftools-2.7-h767d802_2.tar.bz2",
+  "version": "2.7"
+}

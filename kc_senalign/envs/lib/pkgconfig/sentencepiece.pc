@@ -1,0 +1,10 @@
+prefix=/home/hieu/project/crawl/envs
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: sentencepiece
+Description: Unsupervised text tokenizer and detokenizer for Neural Network-based text generation.
+Version: 0.1.92
+Libs: -L${libdir} -lsentencepiece -lsentencepiece_train  
+Cflags: -I${includedir} 

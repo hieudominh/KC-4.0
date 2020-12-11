@@ -1,0 +1,17 @@
+MANIFEST.in
+README.md
+VERSION
+sentencepiece.i
+sentencepiece.py
+sentencepiece_wrap.cxx
+setup.cfg
+setup.py
+sentencepiece.egg-info/PKG-INFO
+sentencepiece.egg-info/SOURCES.txt
+sentencepiece.egg-info/dependency_links.txt
+sentencepiece.egg-info/top_level.txt
+test/__init__.py
+test/botchan.txt
+test/sentencepiece_test.py
+test/test_ja_model.model
+test/test_model.model
