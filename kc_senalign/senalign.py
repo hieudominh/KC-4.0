@@ -281,8 +281,8 @@ def out_to_file(lang_1, lang_2, outputfile_1, outputfile_2, sentence_pairs):
 
     for i in range(len(sentence_pairs)):
         pair = sentence_pairs[i]
-        f1.write(lang_1 + "_" + str(i) + "_" + str(pair[0]) + "    " + pair[1] + "\n")
-        f2.write(lang_2 + "_" + str(i) + "_" + str(pair[0]) + "    " + pair[2] + "\n")
+        f1.write(lang_1 + "_" + str(i) + "_" + str(pair[0]) + "\t" + pair[1] + "\n")
+        f2.write(lang_2 + "_" + str(i) + "_" + str(pair[0]) + "\t" + pair[2] + "\n")
 
     f1.close()
     f2.close()
@@ -313,17 +313,7 @@ def main():
 
     sys.exit()
 
-    # try:
-    #     opts, args = getopt.getopt(argv,"hl:i:o:",["lang="])
-    #     input_file(opts,args)
-    # except getopt.GetoptError:
-    #     try:
-    #         opts, args = getopt.getopt(argv,"hl:s:o:",["lang=","string="])
-    #         print(opts)
-    #     except getopt.GetoptError:
-    #         print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-    #         sys.exit(2)
-
+    
 
 if __name__ == "__main__":
     main()
