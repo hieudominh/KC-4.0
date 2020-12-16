@@ -139,7 +139,7 @@ def detect_sentences(text_list: List[str], end_signs: str):
     return sentences
 
 
-def process(lang1, lang2, string1, string2):
+def process(lang1, lang2, string1, string2,threhsold):
     km_translate = []
     if lang1 == 'km':
         # driver.get('https://translate.google.com/?sl=' + lang1 + '&tl=' + lang2 + '&op=translate')
@@ -177,48 +177,46 @@ def process(lang1, lang2, string1, string2):
         for j in range(len(km)):
             sim = cos(vn[i], km[j][0])
             # print(sim.item(), vn_segment[i],km_segment[j],km_sentences[j])
-            sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " "),i,j))
+            if sim.item()>threhsold:
+                sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " ")))
 
     return sentence_pairs
 
 
-def input_string(args):
-    lang_1 = ''
-    lang_2 = ''
-    string_1 = ''
-    string_2 = ''
-    for arg in args:
-        if arg[0] == 'lang':
-            lang = arg[1]
-            if len(lang) != 2:
-                print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-                sys.exit()
-            else:
-                if 'km' in lang:
-                    if 'vi' in lang:
-                        lang_1 = lang[0]
-                        lang_2 = lang[1]
-                    else:
-                        print('Currently support: km, vi')
-                else:
-                    print('Currently support: km, vi')
-        elif arg[0] == 'string':
-            inputstring = arg[1]
-            if len(inputstring) != 2:
-                print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-                sys.exit()
-            else:
-                string_1 = inputstring[0]
-                string_2 = inputstring[1]
-        elif arg[0] == 'output':
-            outputfile = arg[1]
-            if len(outputfile) != 2:
-                print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-                sys.exit()
-            else:
-                outputfile_1 = outputfile[0]
-                outputfile_2 = outputfile[1]
-    return lang_1, lang_2, string_1, string_2, outputfile_1, outputfile_2
+# def input_string(args):
+#     lang_1 = ''
+#     lang_2 = ''
+#     string_1 = ''
+#     string_2 = ''
+#     for arg in args:
+#         if arg[0] == 'lang':
+#             lang = arg[1]
+#             if len(lang) != 2:
+#                 print('senalign.py -lang <lang1> <lang2> -i <inputfile1> <inputfile2> -o <outputfile>')  
+#                 sys.exit()
+#             else:
+#                 if 'km' in lang:
+#                     if 'vi' in lang:
+#                         lang_1 = lang[0]
+#                         lang_2 = lang[1]
+#                     else:
+#                         print('Currently support: km, vi')
+#                 else:
+#                     print('Currently support: km, vi')
+#         elif arg[0] == 'string':
+#             inputstring = arg[1]
+#             if len(inputstring) != 2:
+#                 print('senalign.py -lang <lang1> <lang2> -i <inputfile1> <inputfile2> -o <outputfile>')  
+#                 sys.exit()
+#             else:
+#                 string_1 = inputstring[0]
+#                 string_2 = inputstring[1]
+#         elif arg[0] == 'output':
+#             outputfile = arg[1]
+#             if len(outputfile) != 1:
+#                 print('senalign.py -lang <lang1> <lang2> -i <inputfile1> <inputfile2> -o <outputfile>')  
+#                 sys.exit()
+#     return lang_1, lang_2, string_1, string_2, outputfile
 
 
 def input_file(args):
@@ -228,39 +226,22 @@ def input_file(args):
     inputfile_1 = ''
     inputfile_2 = ''
     outputfile = ''
-    outputfile_1 = ''
-    outputfile_2 = ''
+    # outputfile_1 = ''
+    # outputfile_2 = ''
     for arg in args:
-        if arg[0] == 'lang':
-            lang = arg[1]
-            if len(lang) != 2:
-                print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-                sys.exit()
-            else:
-                if 'km' in lang:
-                    if 'vi' in lang:
-                        lang_1 = lang[0]
-                        lang_2 = lang[1]
-                    else:
-                        print('Currently support: km, vi')
-                else:
-                    print('Currently support: km, vi')
-        elif arg[0] == 'input':
-            inputfile = arg[1]
-            if len(inputfile) != 2:
-                print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-                sys.exit()
-            else:
-                inputfile_1 = inputfile[0]
-                inputfile_2 = inputfile[1]
+        if arg[0] == 'language':
+            lang_1 = arg[1]
+            lang_2 = 'vi'
+            if lang_1 != 'km':
+                print('language not supported')
+        elif arg[0] == 'source':
+            inputfile_2 = arg[1]
+        elif arg[0] == 'target':
+            inputfile_1 = arg[1]
         elif arg[0] == 'output':
             outputfile = arg[1]
-            if len(outputfile) != 2:
-                print('senalign.py -lang <lang1>,<lang2> -i <inputfile1>,<inputfile2> -o <outputfile1>,<outputfile2>')
-                sys.exit()
-            else:
-                outputfile_1 = outputfile[0]
-                outputfile_2 = outputfile[1]
+        elif arg[0] == 'threshold':
+            threshold = arg[1]
     try:
         with open(inputfile_1) as file_in:
             string_1 = file_in.read()
@@ -275,48 +256,54 @@ def input_file(args):
         print('File not found: ', string_2)
         sys.exit()
 
-    return lang_1, lang_2, string_1, string_2, outputfile_1, outputfile_2
+    return lang_1, lang_2, string_1, string_2, outputfile , threshold
 
 
-def out_to_file(lang_1, lang_2, outputfile_1, outputfile_2, sentence_pairs):
-    f1 = open(outputfile_1, 'w+')
-    f2 = open(outputfile_2, 'w+')
+def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
+    f = open(outputfile, 'w+')
 
     for i in range(len(sentence_pairs)):
         pair = sentence_pairs[i]
         if lang_1 == 'km':
-            f1.write(str(pair[4]) + "\t" + str(pair[0]) + "\t" + pair[1] + "\n")
-            f2.write(str(pair[3]) + "\t" + str(pair[0]) + "\t" + pair[2] + "\n")
-        else:
-            f1.write(str(pair[3]) + "\t" + str(pair[0]) + "\t" + pair[2] + "\n")
-            f2.write(str(pair[4]) + "\t" + str(pair[0]) + "\t" + pair[1] + "\n")
+            f.write(str(pair[0]) + "\t" + pair[2] + "\t" + pair[1] + "\n")
+        elif lang_2 == 'km':
+            f.write(str(pair[0]) + "\t" + pair[1] + "\t" + pair[2] + "\n")
 
-    f1.close()
-    f2.close()
+    f.close()
 
 
 def main():
+    # parser = argparse.ArgumentParser(
+    #     description='-l <lang1> <lang2> -i <inputfile1> <inputfile2> -o <outputfile1> <outputfile2>' + '//' + ' -l <lang1> <lang2> -s <string1> <string2> -o <outputfile1> <outputfile2>')
+    # parser.add_argument('-l', '--lang', nargs='+', help='Input 2 language IDs', required=True)
+    # parser.add_argument('-s', '--string', nargs='+',
+    #                     help='Input 2 strings with respect to the two languages whose IDs are given', required=False)
+    # parser.add_argument('-i', '--input', nargs='+',
+    #                     help='Input 2 input files with respect to the two languages whose IDs are given',
+    #                     required=False)
+    # parser.add_argument('-o', '--output', nargs='*',
+    #                     help='Input 1 output file with respect to the two language whose IDs are given', required=True)
+    # args = parser.parse_args()
+    # args_list = args._get_kwargs()
+    # for arg in args_list:
+    #     if arg[0] == 'input':
+    #         if arg[1] != None:
+    #             lang_1, lang_2, string_1, string_2, outputfile= input_file(args_list)
+    #         else:
+    #             lang_1, lang_2, string_1, string_2, outputfile= input_string(args_list)
     parser = argparse.ArgumentParser(
-        description='-l <lang1> <lang2> -i <inputfile1> <inputfile2> -o <outputfile1> <outputfile2>' + '//' + ' -l <lang1> <lang2> -s <string1> <string2> -o <outputfile1> <outputfile2>')
-    parser.add_argument('-l', '--lang', nargs='+', help='Input 2 language IDs', required=True)
-    parser.add_argument('-s', '--string', nargs='+',
-                        help='Input 2 strings with respect to the two languages whose IDs are given', required=False)
-    parser.add_argument('-i', '--input', nargs='+',
-                        help='Input 2 input files with respect to the two languages whose IDs are given',
-                        required=False)
-    parser.add_argument('-o', '--output', nargs='+',
-                        help='Input 2 output file with respect to the two language whose IDs are given', required=True)
+        description='-s <source_language_file> -t <target_language_file> -lang <target_language> -o <output_file> -thres <threshold>'
+    )
+    parser.add_argument('-s','--source',nargs='?',help='Input a source language file',required = True)
+    parser.add_argument('-t','--target',nargs='?',help='Input a target language file',required = True)
+    parser.add_argument('-lang','--language',nargs='?',help='Input a target language',required = True)
+    parser.add_argument('-o','--output',nargs='?',help='Input output file',required = True)
+    parser.add_argument('-thres','--threshold', nargs='?', const=0.6, type=float, default=0.6)
     args = parser.parse_args()
     args_list = args._get_kwargs()
-    for arg in args_list:
-        if arg[0] == 'input':
-            if arg[1] != None:
-                lang_1, lang_2, string_1, string_2, outputfile_1, outputfile_2 = input_file(args_list)
-            else:
-                lang_1, lang_2, string_1, string_2, outputfile_1, outputfile_2 = input_string(args_list)
-
-    sentence_pairs = process(lang_1, lang_2, string_1, string_2)
-    out_to_file(lang_1, lang_2, outputfile_1, outputfile_2, sentence_pairs)
+    lang_1, lang_2, string_1, string_2, outputfile, threshold = input_file(args_list)
+    sentence_pairs = process(lang_1, lang_2, string_1, string_2,threshold)
+    out_to_file(lang_1, lang_2, outputfile, sentence_pairs)
 
     sys.exit()
 
