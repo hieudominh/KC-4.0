@@ -3,10 +3,11 @@ import re
 import sys
 import time
 from typing import List
+from google_translate.run_translate import * 
 
 import torch
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support.ui import WebDriverWait
 from transformers import AutoModel, AutoTokenizer
 from vncorenlp import VnCoreNLP
 
@@ -16,44 +17,46 @@ print(rdrsegmenter)
 phobert = AutoModel.from_pretrained("vinai/phobert-base", output_hidden_states=True).to(device)
 tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
 cos = torch.nn.CosineSimilarity(dim=0)
-driver = webdriver.Chrome('./lib/webdriver/google-chrome/chromedriver')
+# driver = webdriver.Chrome('./lib/webdriver/google-chrome/chromedriver')
 KM_SENTENCE_END = r"(?<!\w[\.៕។]\w[\.៕។])(?<![A-Z][a-z][\.៕។])(?<=[\.៕។]|\?|\!)\s"
 # src_text = driver.find_element_by_xpath('//textarea[@id="source"]')
 prev_text = ''
 
+def translate(str_in , src_lg, dest_lg):
+    return translate_str(str_in = str_in , src_lg = src_lg, dest_lg = dest_lg)
 
-def translate(text):
-    # print(text)
-    global prev_text
+# def translate(text):
+#     # print(text)
+#     global prev_text
 
-    def find_trans_box(driver):
-        element = driver.find_element_by_xpath('//span[@jsname="W297wb"]')
-        # print(element.text)
-        if element and element.text == prev_text:
-            # print("bug")
-            return False
-        if element and element.text != prev_text:
-            return element
-        else:
-            return False
+#     def find_trans_box(driver):
+#         element = driver.find_element_by_xpath('//span[@jsname="W297wb"]')
+#         # print(element.text)
+#         if element and element.text == prev_text:
+#             # print("bug")
+#             return False
+#         if element and element.text != prev_text:
+#             return element
+#         else:
+#             return False
 
-    def find_src_box(driver):
-        element = driver.find_element_by_xpath('//textarea[@class="er8xn"]')
-        if element:
-            return element
-        else:
-            return False
+#     def find_src_box(driver):
+#         element = driver.find_element_by_xpath('//textarea[@class="er8xn"]')
+#         if element:
+#             return element
+#         else:
+#             return False
 
-    src_text = WebDriverWait(driver, 50).until(find_src_box)
-    src_text.clear()
-    src_text.send_keys(text)
-    time.sleep(1)
-    # WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.XPATH, '//div[@class="text-wrap tlid-copy-target"]')))
-    dst_text = WebDriverWait(driver, 50).until(find_trans_box)
-    time.sleep(1)
-    # dst_text = driver.find_element_by_xpath('//div[@class="text-wrap tlid-copy-target"]')
-    prev_text = dst_text.text
-    return dst_text.text
+#     src_text = WebDriverWait(driver, 50).until(find_src_box)
+#     src_text.clear()
+#     src_text.send_keys(text)
+#     time.sleep(1)
+#     # WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.XPATH, '//div[@class="text-wrap tlid-copy-target"]')))
+#     dst_text = WebDriverWait(driver, 50).until(find_trans_box)
+#     time.sleep(1)
+#     # dst_text = driver.find_element_by_xpath('//div[@class="text-wrap tlid-copy-target"]')
+#     prev_text = dst_text.text
+#     return dst_text.text
 
 
 def embed_sentence_with_phobert(text: str, segmenter, tokenizer, model, device):
@@ -139,17 +142,17 @@ def detect_sentences(text_list: List[str], end_signs: str):
 def process(lang1, lang2, string1, string2):
     km_translate = []
     if lang1 == 'km':
-        driver.get('https://translate.google.com/?sl=' + lang1 + '&tl=' + lang2 + '&op=translate')
+        # driver.get('https://translate.google.com/?sl=' + lang1 + '&tl=' + lang2 + '&op=translate')
         km_sentences = detect_sentences([string1], KM_SENTENCE_END)
         for km_sentence in km_sentences:
-            km_translate.append(translate(km_sentence))
+            km_translate.append(translate(km_sentence,lang1,lang2))
         src_vn = string2
     elif lang2 == 'km':
+        # driver.get('https://translate.google.com/?sl=' + lang2 + '&tl=' + lang1 + '&op=translate')
         km_sentences = detect_sentences([string2], KM_SENTENCE_END)
         for km_sentence in km_sentences:
-            km_translate.append(translate(km_sentence))
+            km_translate.append(translate(km_sentence,lang2,lang1))
         src_vn = string1
-
     # print('\nvn\n')
     vn_segment, vn = embed_sentence_with_phobert(text=src_vn, segmenter=rdrsegmenter, tokenizer=tokenizer,
                                                  model=phobert, device=device)
@@ -174,7 +177,7 @@ def process(lang1, lang2, string1, string2):
         for j in range(len(km)):
             sim = cos(vn[i], km[j][0])
             # print(sim.item(), vn_segment[i],km_segment[j],km_sentences[j])
-            sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " ")))
+            sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " "),i,j))
 
     return sentence_pairs
 
@@ -281,8 +284,12 @@ def out_to_file(lang_1, lang_2, outputfile_1, outputfile_2, sentence_pairs):
 
     for i in range(len(sentence_pairs)):
         pair = sentence_pairs[i]
-        f1.write(lang_1 + "_" + str(i) + "_" + str(pair[0]) + "\t" + pair[1] + "\n")
-        f2.write(lang_2 + "_" + str(i) + "_" + str(pair[0]) + "\t" + pair[2] + "\n")
+        if lang_1 == 'km':
+            f1.write(str(pair[4]) + "\t" + str(pair[0]) + "\t" + pair[1] + "\n")
+            f2.write(str(pair[3]) + "\t" + str(pair[0]) + "\t" + pair[2] + "\n")
+        else:
+            f1.write(str(pair[3]) + "\t" + str(pair[0]) + "\t" + pair[2] + "\n")
+            f2.write(str(pair[4]) + "\t" + str(pair[0]) + "\t" + pair[1] + "\n")
 
     f1.close()
     f2.close()
