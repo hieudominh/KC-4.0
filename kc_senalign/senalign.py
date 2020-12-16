@@ -200,9 +200,7 @@ def process(lang1, lang2, string1, string2, threshold):
                                                  model=phobert, device=device)
     vn_title_segment, vn_title = embed_sentence_with_phobert(text=title, segmenter=rdrsegmenter, tokenizer=tokenizer,
                                                  model=phobert, device=device)
-    print(vn_segment)
     vn_segment += vn_title_segment
-    print(vn_segment)
     vn_title += vn
     # print('\nkm\n')
     km_segment = []
