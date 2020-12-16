@@ -3,7 +3,7 @@ import re
 import sys
 import time
 from typing import List
-from google_translate.run_translate import * 
+from google_translate.run_translate import *
 
 import torch
 from selenium import webdriver
@@ -22,8 +22,10 @@ KM_SENTENCE_END = r"(?<!\w[\.៕។]\w[\.៕។])(?<![A-Z][a-z][\.៕។])(?<=[\
 # src_text = driver.find_element_by_xpath('//textarea[@id="source"]')
 prev_text = ''
 
-def translate(str_in , src_lg, dest_lg):
-    return translate_str(str_in = str_in , src_lg = src_lg, dest_lg = dest_lg)
+
+def translate(str_in, src_lg, dest_lg):
+    return translate_str(str_in=str_in, src_lg=src_lg, dest_lg=dest_lg)
+
 
 # def translate(text):
 #     # print(text)
@@ -84,9 +86,9 @@ def embed_sentence_with_phobert(text: str, segmenter, tokenizer, model, device):
 
 
 def embed_concatenated_sentence_with_phobert(text: str, segmenter, tokenizer, model, device):
-    '''
-  Concat if segmented into sentences
-  '''
+    """
+    Concat if segmented into sentences
+    """
     try:
         segments = segmenter.tokenize(text)
         lines = [' '.join(segment) for segment in segments]
@@ -114,6 +116,17 @@ def embed_concatenated_sentence_with_phobert(text: str, segmenter, tokenizer, mo
         return None
 
 
+def detect_title(text: str) -> List[str]:
+    '''
+    Detect title in a document
+    :param text: a document
+    :return: List[title, contents] or List[contents]
+    '''
+    if text is None:
+        raise TypeError
+    return text.split("\n", 1)
+
+
 def detect_sentences(text_list: List[str], end_signs: str):
     # if(not isinstance(text_list, list)):
     #     raise TypeError
@@ -122,6 +135,7 @@ def detect_sentences(text_list: List[str], end_signs: str):
     '''
     For Khmer only
     '''
+
     def split_with_re(sep: str, lines: list):
         strings = []
         for line in lines:
@@ -139,23 +153,57 @@ def detect_sentences(text_list: List[str], end_signs: str):
     return sentences
 
 
-def process(lang1, lang2, string1, string2,threhsold):
+def process(lang1, lang2, string1, string2, threshold):
     km_translate = []
+    km_sentences = []
+
     if lang1 == 'km':
         # driver.get('https://translate.google.com/?sl=' + lang1 + '&tl=' + lang2 + '&op=translate')
-        km_sentences = detect_sentences([string1], KM_SENTENCE_END)
+        parts = detect_title(string1)
+        if len(parts) == 1:
+            contents = parts[0]
+        elif len(parts) == 2:
+            km_sentences = [parts[0]]
+            contents = parts[1]
+        else:
+            raise TypeError
+        km_sentences += detect_sentences([contents], KM_SENTENCE_END)
         for km_sentence in km_sentences:
-            km_translate.append(translate(km_sentence,lang1,lang2))
+            km_translate.append(translate(km_sentence, lang1, lang2))
         src_vn = string2
     elif lang2 == 'km':
         # driver.get('https://translate.google.com/?sl=' + lang2 + '&tl=' + lang1 + '&op=translate')
-        km_sentences = detect_sentences([string2], KM_SENTENCE_END)
+        parts = detect_title(string2)
+        if len(parts) == 1:
+            contents = parts[0]
+        elif len(parts) == 2:
+            km_sentences = [parts[0]]
+            contents = parts[1]
+        else:
+            raise TypeError
+        km_sentences += detect_sentences([contents], KM_SENTENCE_END)
         for km_sentence in km_sentences:
-            km_translate.append(translate(km_sentence,lang2,lang1))
+            km_translate.append(translate(km_sentence, lang2, lang1))
         src_vn = string1
     # print('\nvn\n')
-    vn_segment, vn = embed_sentence_with_phobert(text=src_vn, segmenter=rdrsegmenter, tokenizer=tokenizer,
+    # print(km_sentences)
+    parts = detect_title(src_vn)
+    if len(parts) == 1:
+        contents = parts[0]
+    elif len(parts) == 2:
+        title = parts[0]
+        contents = parts[1]
+    else:
+        raise TypeError
+
+    vn_segment, vn = embed_sentence_with_phobert(text=contents, segmenter=rdrsegmenter, tokenizer=tokenizer,
                                                  model=phobert, device=device)
+    vn_title_segment, vn_title = embed_sentence_with_phobert(text=title, segmenter=rdrsegmenter, tokenizer=tokenizer,
+                                                 model=phobert, device=device)
+    print(vn_segment)
+    vn_segment += vn_title_segment
+    print(vn_segment)
+    vn_title += vn
     # print('\nkm\n')
     km_segment = []
     km = []
@@ -177,7 +225,7 @@ def process(lang1, lang2, string1, string2,threhsold):
         for j in range(len(km)):
             sim = cos(vn[i], km[j][0])
             # print(sim.item(), vn_segment[i],km_segment[j],km_sentences[j])
-            if sim.item()>threhsold:
+            if sim.item() > threshold:
                 sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " ")))
 
     return sentence_pairs
@@ -256,7 +304,7 @@ def input_file(args):
         print('File not found: ', string_2)
         sys.exit()
 
-    return lang_1, lang_2, string_1, string_2, outputfile , threshold
+    return lang_1, lang_2, string_1, string_2, outputfile, threshold
 
 
 def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
@@ -294,20 +342,19 @@ def main():
     parser = argparse.ArgumentParser(
         description='-s <source_language_file> -t <target_language_file> -lang <target_language> -o <output_file> -thres <threshold>'
     )
-    parser.add_argument('-s','--source',nargs='?',help='Input a source language file',required = True)
-    parser.add_argument('-t','--target',nargs='?',help='Input a target language file',required = True)
-    parser.add_argument('-lang','--language',nargs='?',help='Input a target language',required = True)
-    parser.add_argument('-o','--output',nargs='?',help='Input output file',required = True)
-    parser.add_argument('-thres','--threshold', nargs='?', const=0.6, type=float, default=0.6)
+    parser.add_argument('-s', '--source', nargs='?', help='Input a source language file', required=True)
+    parser.add_argument('-t', '--target', nargs='?', help='Input a target language file', required=True)
+    parser.add_argument('-lang', '--language', nargs='?', help='Input a target language', required=True)
+    parser.add_argument('-o', '--output', nargs='?', help='Input output file', required=True)
+    parser.add_argument('-thres', '--threshold', nargs='?', const=0.6, type=float, default=0.6)
     args = parser.parse_args()
     args_list = args._get_kwargs()
     lang_1, lang_2, string_1, string_2, outputfile, threshold = input_file(args_list)
-    sentence_pairs = process(lang_1, lang_2, string_1, string_2,threshold)
+    sentence_pairs = process(lang_1, lang_2, string_1, string_2, threshold)
     out_to_file(lang_1, lang_2, outputfile, sentence_pairs)
 
     sys.exit()
 
-    
 
 if __name__ == "__main__":
     main()
