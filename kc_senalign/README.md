@@ -29,11 +29,11 @@ Inwhich:
 	lang: target language
 	threshold: threshold of similarity (default : 0.6)
 	
-Eg: python3 senalign.py -s vi.txt -t km.txt -o vi_km.txt -lang km -thres 0.8
+Eg: python3 senalign.py -s vi.txt -t km.txt -o vi_km.txt -lang km -thres 0.6
 ```
 
 # Note
 ```
 CURRENTLY SUPPORTED LANGUAGUE: km 
-Suggested threshold: 0.6
+Suggested threshold: 0.7
 ```
