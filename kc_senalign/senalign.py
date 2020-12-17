@@ -287,13 +287,28 @@ def process(lang1, lang2, string1, string2, threshold):
         km_segment.append(seg)
 
     sentence_pairs = []
-
     for i in range(len(vn)):
         for j in range(len(km)):
             sim = cos(vn[i], km[j][0])
             # print(sim.item(), vn_segment[i],km_segment[j],km_sentences[j])
             if sim.item() > threshold:
-                sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " ")))
+                se = ''
+                for vn_seg in vn_segment[i]:
+                    if vn_seg == '.':
+                        se = se + vn_seg
+                    elif vn_seg == ':':
+                        se = se + vn_seg
+                    elif vn_seg == ',':
+                        se = se + vn_seg   
+                    elif vn_seg == '...':
+                        se = se + vn_seg
+                    elif vn_seg == ';':
+                        se = se + vn_seg
+                    else:
+                        se = se + ' ' + vn_seg.replace("_"," ")
+
+                # sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " ")))
+                sentence_pairs.append((sim.item(), km_sentences[j],se))
 
     return sentence_pairs
 
@@ -387,9 +402,9 @@ def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
     for i in range(len(sentence_pairs)):
         pair = sentence_pairs[i]
         if lang_1 == 'km':
-            f.write(str(pair[0]) + "\t" + pair[2] + "\t" + pair[1] + "\n")
+            f.write(str(pair[0]) + "\t" + pair[2].replace('\n',' ') + "\t" + pair[1].replace('\n',' ') + "\n")
         elif lang_2 == 'km':
-            f.write(str(pair[0]) + "\t" + pair[1] + "\t" + pair[2] + "\n")
+            f.write(str(pair[0]) + "\t" + pair[1].replace('\n',' ') + "\t" + pair[2].replace('\n',' ') + "\n")
 
     f.close()
 
