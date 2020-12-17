@@ -4,13 +4,15 @@ import sys
 import time
 from typing import List
 from google_translate.run_translate import *
-
+from laserembeddings import Laser
+import numpy as np
 import torch
 from selenium import webdriver
 # from selenium.webdriver.support.ui import WebDriverWait
 from transformers import AutoModel, AutoTokenizer
 from vncorenlp import VnCoreNLP
 
+laser = Laser()
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 rdrsegmenter = VnCoreNLP("./lib/vncorenlp/VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m')
 print(rdrsegmenter)
@@ -60,6 +62,10 @@ def translate(str_in, src_lg, dest_lg):
 #     prev_text = dst_text.text
 #     return dst_text.text
 
+def embed_sentences_with_laser(text_list: List[str], lang: str) -> List[torch.tensor]:
+    embeddings = laser.embed_sentences(text_list, lang)
+    embeddings = [torch.from_numpy(embedding) for embedding in embeddings]
+    return embeddings
 
 def embed_sentence_with_phobert(text: str, segmenter, tokenizer, model, device):
     try:
@@ -126,8 +132,15 @@ def detect_title(text: str) -> List[str]:
         raise TypeError
     return text.split("\n", 1)
 
+def extract_vi_sentences(text_list: List[str], segmenter):
+    sentences = []
+    for text in text_list:
+        segments = segmenter.tokenize(text)
+        lines = [' '.join(segment).replace("_"," ") for segment in segments]
+        sentences += lines
+    return sentences
 
-def detect_sentences(text_list: List[str], end_signs: str):
+def detect_km_sentences(text_list: List[str], end_signs: str):
     # if(not isinstance(text_list, list)):
     #     raise TypeError
     # elif(len(text_list) == 0):
@@ -152,8 +165,64 @@ def detect_sentences(text_list: List[str], end_signs: str):
     sentences = split_with_re(end_signs, text_list)
     return sentences
 
+def process2(lang1, lang2, string1, string2, threshold):
+    """
+    With LASER
+    """
+    km_sentences = []
+
+    if lang1 == 'km':
+        parts = detect_title(string1)
+        if len(parts) == 1:
+            contents = parts[0]
+        elif len(parts) == 2:
+            km_sentences = [parts[0]]
+            contents = parts[1]
+        else:
+            raise TypeError
+        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        src_vn = string2
+    elif lang2 == 'km':
+        parts = detect_title(string2)
+        if len(parts) == 1:
+            contents = parts[0]
+        elif len(parts) == 2:
+            km_sentences = [parts[0]]
+            contents = parts[1]
+        else:
+            raise TypeError
+        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        src_vn = string1
+    # print(km_sentences)
+    km = embed_sentences_with_laser(km_sentences, "km")
+
+    parts = detect_title(src_vn)
+    vi_sentences = []
+    if len(parts) == 1:
+        contents = parts[0]
+    elif len(parts) == 2:
+        vi_sentences += parts[0]
+        contents = parts[1]
+    else:
+        raise TypeError
+
+    vi_sentences = extract_vi_sentences([contents], rdrsegmenter)
+    # print(vi_sentences)
+    vi = embed_sentences_with_laser(vi_sentences, "vi")
+
+    sentence_pairs = []
+
+    for i in range(len(vi)):
+        for j in range(len(km)):
+            sim = cos(vi[i], km[j])
+            if sim.item() > threshold:
+                sentence_pairs.append((sim.item(), km_sentences[j], vi_sentences[i]))
+    return sentence_pairs
 
 def process(lang1, lang2, string1, string2, threshold):
+    """
+    With PhoBert and Google Translate
+    """
     km_translate = []
     km_sentences = []
 
@@ -167,7 +236,7 @@ def process(lang1, lang2, string1, string2, threshold):
             contents = parts[1]
         else:
             raise TypeError
-        km_sentences += detect_sentences([contents], KM_SENTENCE_END)
+        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
         for km_sentence in km_sentences:
             km_translate.append(translate(km_sentence, lang1, lang2))
         src_vn = string2
@@ -181,7 +250,7 @@ def process(lang1, lang2, string1, string2, threshold):
             contents = parts[1]
         else:
             raise TypeError
-        km_sentences += detect_sentences([contents], KM_SENTENCE_END)
+        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
         for km_sentence in km_sentences:
             km_translate.append(translate(km_sentence, lang2, lang1))
         src_vn = string1
@@ -229,7 +298,14 @@ def process(lang1, lang2, string1, string2, threshold):
     return sentence_pairs
 
 
-# def input_string(args):
+# def input_string(args):def detect_vi_setences(text_list: List[str], segmenter):
+    segments = segmenter.tokenize(text)
+    lines = [' '.join(segment) for segment in segments]
+    #
+    segment_list = []
+    for segment in segments:
+        segment_list += segment
+    return segment_list
 #     lang_1 = ''
 #     lang_2 = ''
 #     string_1 = ''
@@ -348,7 +424,7 @@ def main():
     args = parser.parse_args()
     args_list = args._get_kwargs()
     lang_1, lang_2, string_1, string_2, outputfile, threshold = input_file(args_list)
-    sentence_pairs = process(lang_1, lang_2, string_1, string_2, threshold)
+    sentence_pairs = process2(lang_1, lang_2, string_1, string_2, threshold)
     out_to_file(lang_1, lang_2, outputfile, sentence_pairs)
 
     sys.exit()
