@@ -67,6 +67,7 @@ def embed_sentences_with_laser(text_list: List[str], lang: str) -> List[torch.te
     embeddings = [torch.from_numpy(embedding) for embedding in embeddings]
     return embeddings
 
+
 def embed_sentence_with_phobert(text: str, segmenter, tokenizer, model, device):
     try:
         segments = segmenter.tokenize(text)
@@ -132,13 +133,15 @@ def detect_title(text: str) -> List[str]:
         raise TypeError
     return text.split("\n", 1)
 
+
 def extract_vi_sentences(text_list: List[str], segmenter):
     sentences = []
     for text in text_list:
         segments = segmenter.tokenize(text)
-        lines = [' '.join(segment).replace("_"," ") for segment in segments]
+        lines = [' '.join(segment).replace("_", " ") for segment in segments]
         sentences += lines
     return sentences
+
 
 def detect_km_sentences(text_list: List[str], end_signs: str):
     # if(not isinstance(text_list, list)):
@@ -164,6 +167,65 @@ def detect_km_sentences(text_list: List[str], end_signs: str):
 
     sentences = split_with_re(end_signs, text_list)
     return sentences
+
+
+def process3(lang1, lang2, string1, string2, maxpair):
+    """
+   Laser with maxpairs
+   """
+    km_sentences = []
+
+    if lang1 == 'km':
+        parts = detect_title(string1)
+        if len(parts) == 1:
+            contents = parts[0]
+        elif len(parts) == 2:
+            km_sentences = [parts[0]]
+            contents = parts[1]
+        else:
+            raise TypeError
+        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        src_vn = string2
+    elif lang2 == 'km':
+        parts = detect_title(string2)
+        if len(parts) == 1:
+            contents = parts[0]
+        elif len(parts) == 2:
+            km_sentences = [parts[0]]
+            contents = parts[1]
+        else:
+            raise TypeError
+        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        src_vn = string1
+    # print(km_sentences)
+    km = embed_sentences_with_laser(km_sentences, "km")
+
+    parts = detect_title(src_vn)
+    vi_sentences = []
+    if len(parts) == 1:
+        contents = parts[0]
+    elif len(parts) == 2:
+        vi_sentences += parts[0]
+        contents = parts[1]
+    else:
+        raise TypeError
+
+    vi_sentences = extract_vi_sentences([contents], rdrsegmenter)
+    # print(vi_sentences)
+    vi = embed_sentences_with_laser(vi_sentences, "vi")
+
+    sentence_pairs = []
+
+    for i in range(len(vi)):
+        pairs = []
+        for j in range(len(km)):
+            sim = cos(vi[i], km[j])
+            pairs.append((sim.item(), km_sentences[j], vi_sentences[i]))
+        pairs.sort(key=lambda pair: pair[0], reverse=True)
+        sentence_pairs += pairs[:maxpair]
+        del pairs
+    return sentence_pairs
+
 
 def process2(lang1, lang2, string1, string2, threshold):
     """
@@ -219,6 +281,7 @@ def process2(lang1, lang2, string1, string2, threshold):
                 sentence_pairs.append((sim.item(), km_sentences[j], vi_sentences[i]))
     return sentence_pairs
 
+
 def process(lang1, lang2, string1, string2, threshold):
     """
     With PhoBert and Google Translate
@@ -268,7 +331,7 @@ def process(lang1, lang2, string1, string2, threshold):
     vn_segment, vn = embed_sentence_with_phobert(text=contents, segmenter=rdrsegmenter, tokenizer=tokenizer,
                                                  model=phobert, device=device)
     vn_title_segment, vn_title = embed_sentence_with_phobert(text=title, segmenter=rdrsegmenter, tokenizer=tokenizer,
-                                                 model=phobert, device=device)
+                                                             model=phobert, device=device)
     vn_segment += vn_title_segment
     vn_title += vn
     # print('\nkm\n')
@@ -299,21 +362,20 @@ def process(lang1, lang2, string1, string2, threshold):
                     elif vn_seg == ':':
                         se = se + vn_seg
                     elif vn_seg == ',':
-                        se = se + vn_seg   
+                        se = se + vn_seg
                     elif vn_seg == '...':
                         se = se + vn_seg
                     elif vn_seg == ';':
                         se = se + vn_seg
                     else:
-                        se = se + ' ' + vn_seg.replace("_"," ")
+                        se = se + ' ' + vn_seg.replace("_", " ")
 
                 # sentence_pairs.append((sim.item(), km_sentences[j], ' '.join(vn_segment[i]).replace("_", " ")))
-                sentence_pairs.append((sim.item(), km_sentences[j],se))
+                sentence_pairs.append((sim.item(), km_sentences[j], se))
 
     return sentence_pairs
 
-
-# def input_string(args):def detect_vi_setences(text_list: List[str], segmenter):
+    # def input_string(args):def detect_vi_setences(text_list: List[str], segmenter):
     segments = segmenter.tokenize(text)
     lines = [' '.join(segment) for segment in segments]
     #
@@ -321,6 +383,8 @@ def process(lang1, lang2, string1, string2, threshold):
     for segment in segments:
         segment_list += segment
     return segment_list
+
+
 #     lang_1 = ''
 #     lang_2 = ''
 #     string_1 = ''
@@ -340,7 +404,8 @@ def process(lang1, lang2, string1, string2, threshold):
 #                         print('Currently support: km, vi')
 #                 else:
 #                     print('Currently support: km, vi')
-#         elif arg[0] == 'string':
+#         elif arg[0] == 'string':python3 senalign.py -s vi.txt -t km.txt -o vi_km.txt -lang km -thres 0.6
+
 #             inputstring = arg[1]
 #             if len(inputstring) != 2:
 #                 print('senalign.py -lang <lang1> <lang2> -i <inputfile1> <inputfile2> -o <outputfile>')  
@@ -379,6 +444,8 @@ def input_file(args):
             outputfile = arg[1]
         elif arg[0] == 'threshold':
             threshold = arg[1]
+        elif arg[0] == 'maxpair':
+            maxpair = arg[1]
     try:
         with open(inputfile_1) as file_in:
             string_1 = file_in.read()
@@ -393,7 +460,7 @@ def input_file(args):
         print('File not found: ', string_2)
         sys.exit()
 
-    return lang_1, lang_2, string_1, string_2, outputfile, threshold
+    return lang_1, lang_2, string_1, string_2, outputfile, threshold, maxpair
 
 
 def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
@@ -402,9 +469,9 @@ def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
     for i in range(len(sentence_pairs)):
         pair = sentence_pairs[i]
         if lang_1 == 'km':
-            f.write(str(pair[0]) + "\t" + pair[2].replace('\n',' ') + "\t" + pair[1].replace('\n',' ') + "\n")
+            f.write(str(pair[0]) + "\t" + pair[2].replace('\n', ' ') + "\t" + pair[1].replace('\n', ' ') + "\n")
         elif lang_2 == 'km':
-            f.write(str(pair[0]) + "\t" + pair[1].replace('\n',' ') + "\t" + pair[2].replace('\n',' ') + "\n")
+            f.write(str(pair[0]) + "\t" + pair[1].replace('\n', ' ') + "\t" + pair[2].replace('\n', ' ') + "\n")
 
     f.close()
 
@@ -429,17 +496,21 @@ def main():
     #         else:
     #             lang_1, lang_2, string_1, string_2, outputfile= input_string(args_list)
     parser = argparse.ArgumentParser(
-        description='-s <source_language_file> -t <target_language_file> -lang <target_language> -o <output_file> -thres <threshold>'
+        description='-s <source_language_file> -t <target_language_file> -lang <target_language> -o <output_file> -thres <threshold> -pair <maxpair>'
     )
     parser.add_argument('-s', '--source', nargs='?', help='Input a source language file', required=True)
     parser.add_argument('-t', '--target', nargs='?', help='Input a target language file', required=True)
     parser.add_argument('-lang', '--language', nargs='?', help='Input a target language', required=True)
     parser.add_argument('-o', '--output', nargs='?', help='Input output file', required=True)
     parser.add_argument('-thres', '--threshold', nargs='?', const=0.6, type=float, default=0.6)
+    parser.add_argument('-pair', '--maxpair', nargs='?', type=int, required=False)
     args = parser.parse_args()
     args_list = args._get_kwargs()
-    lang_1, lang_2, string_1, string_2, outputfile, threshold = input_file(args_list)
-    sentence_pairs = process2(lang_1, lang_2, string_1, string_2, threshold)
+    lang_1, lang_2, string_1, string_2, outputfile, threshold, maxpair = input_file(args_list)
+    if (maxpair > 0):
+        sentence_pairs = process3(lang_1, lang_2, string_1, string_2, maxpair)
+    else:
+        sentence_pairs = process2(lang_1, lang_2, string_1, string_2, threshold)
     out_to_file(lang_1, lang_2, outputfile, sentence_pairs)
 
     sys.exit()
