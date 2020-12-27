@@ -12,7 +12,7 @@ from vncorenlp import VnCoreNLP
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 rdrsegmenter = VnCoreNLP("./lib/vncorenlp/VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m')
-print(rdrsegmenter)
+# print(rdrsegmenter)
 phobert = AutoModel.from_pretrained("vinai/phobert-base", output_hidden_states=True).to(device)
 tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
 cos = torch.nn.CosineSimilarity(dim=0)
@@ -150,7 +150,7 @@ def detect_km_sentences(text_list: List[str], end_signs: str):
     def split_with_re(sep: str, lines: list):
         strings = []
         for line in lines:
-            line.replace("\n", " ")
+            line = line.replace("\n", " ")
             strs = re.split(sep, line)
             # print(strs)
             try:
@@ -489,6 +489,7 @@ def main():
         sentence_pairs = process(lang_1, lang_2, string_1, string_2, threshold)
     out_to_file(lang_1, lang_2, outputfile, sentence_pairs)
 
+    driver.quit()
     sys.exit()
 
 
