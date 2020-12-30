@@ -37,6 +37,6 @@ Eg: python3 senalign.py -s vi.txt -t km.txt -o vi_km.txt -lang km -thres 0.6
 
 # Note
 ```
-CURRENTLY SUPPORTED LANGUAGUE: km 
+CURRENTLY SUPPORTED LANGUAGUE: km,zh
 Suggested threshold: 0.7
 ```

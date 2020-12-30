@@ -18,6 +18,8 @@ tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
 cos = torch.nn.CosineSimilarity(dim=0)
 driver = webdriver.Chrome('./lib/webdriver/google-chrome/chromedriver')
 KM_SENTENCE_END = r"(?<!\w[\.៕។]\w[\.៕។])(?<![A-Z][a-z][\.៕។])(?<=[\.៕។]|\?|\!)\s"
+ZH_SENTENCE_END = u'[^!?。\.\!\?]+[!?。\.\!\?]?'
+
 # src_text = driver.find_element_by_xpath('//textarea[@id="source"]')
 prev_text = ''
 
@@ -137,7 +139,25 @@ def extract_vi_sentences(text_list: List[str], segmenter):
         sentences += lines
     return sentences
 
-
+def detect_zh_sentences(text_list: List[str], end_signs: str):
+    def split_with_re(sep: str, lines: list):
+        strings = []
+        strss = []
+        for line in lines:
+            line = line.replace("\n", " ")
+            strs = re.findall(sep, line,flags=re.U)
+            # print(strs)
+            for strs_line in strs:
+                strss.append(strs_line.strip())
+            try:
+                strss.remove('')
+            except ValueError:
+                pass
+            strings += strss
+        return strings
+    sentences = split_with_re(end_signs, text_list)
+    return sentences
+    
 def detect_km_sentences(text_list: List[str], end_signs: str):
     # if(not isinstance(text_list, list)):
     #     raise TypeError
@@ -149,15 +169,18 @@ def detect_km_sentences(text_list: List[str], end_signs: str):
 
     def split_with_re(sep: str, lines: list):
         strings = []
+        strss = []
         for line in lines:
             line = line.replace("\n", " ")
             strs = re.split(sep, line)
+            for strs_line in strs:
+                strss.append(strs_line.strip())
             # print(strs)
             try:
-                strs.remove('')
+                strss.remove('')
             except ValueError:
                 pass
-            strings += strs
+            strings += strss
         return strings
 
     sentences = split_with_re(end_signs, text_list)
@@ -234,34 +257,34 @@ def process2(lang1, lang2, string1, string2, maxpair):
         if len(parts) == 1:
             contents = parts[0]
         elif len(parts) == 2:
-            km_sentences = [parts[0]]
-            contents = parts[1]
+            km_sentences = []
+            contents_body = parts[1]
+            contents_title = parts[0]
         else:
             raise TypeError
-        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        km_sentences += detect_km_sentences([contents_body], KM_SENTENCE_END)
+        km_sentences += detect_km_sentences([contents_title], KM_SENTENCE_END)
         for km_sentence in km_sentences:
             km_translate.append(translate(km_sentence))
         src_vn = string2
-    elif lang2 == 'km':
-        driver.get('https://translate.google.com/?sl=' + lang2 + '&tl=' + lang1 + '&op=translate')
-        parts = detect_title(string2)
+    elif lang1 == 'zh':
+        driver.get('https://translate.google.com/?sl=' + lang1 + '-CN&tl=' + lang2 + '&op=translate')
+        parts = detect_title(string1)
         if len(parts) == 1:
             contents = parts[0]
         elif len(parts) == 2:
-            km_sentences = [parts[0]]
-            contents = parts[1]
+            km_sentences = []
+            contents_body = parts[1]
+            contents_title = parts[0]
         else:
             raise TypeError
-        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        km_sentences += detect_zh_sentences([contents_title], ZH_SENTENCE_END)
+        km_sentences += detect_zh_sentences([contents_body], ZH_SENTENCE_END)
         for km_sentence in km_sentences:
             km_translate.append(translate(km_sentence))
-        src_vn = string1
+        src_vn = string2
     # print('\nvn\n')
     # print(km_sentences)
-    f = open('test.txt', 'w+')
-    for km_sentence in km_sentences:
-        f.write(km_sentence+'\n')
-    f.close()
     parts = detect_title(src_vn)
     if len(parts) == 1:
         contents = parts[0]
@@ -331,34 +354,34 @@ def process(lang1, lang2, string1, string2, threshold):
         if len(parts) == 1:
             contents = parts[0]
         elif len(parts) == 2:
-            km_sentences = [parts[0]]
-            contents = parts[1]
+            km_sentences = []
+            contents_body = parts[1]
+            contents_title = parts[0]
         else:
             raise TypeError
-        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        km_sentences += detect_km_sentences([contents_body], KM_SENTENCE_END)
+        km_sentences += detect_km_sentences([contents_title], KM_SENTENCE_END)
         for km_sentence in km_sentences:
             km_translate.append(translate(km_sentence))
         src_vn = string2
-    elif lang2 == 'km':
-        driver.get('https://translate.google.com/?sl=' + lang2 + '&tl=' + lang1 + '&op=translate')
-        parts = detect_title(string2)
+    elif lang1 == 'zh':
+        driver.get('https://translate.google.com/?sl=' + lang1 + '-CN&tl=' + lang2 + '&op=translate')
+        parts = detect_title(string1)
         if len(parts) == 1:
             contents = parts[0]
         elif len(parts) == 2:
-            km_sentences = [parts[0]]
-            contents = parts[1]
+            km_sentences = []
+            contents_body = parts[1]
+            contents_title = parts[0]
         else:
             raise TypeError
-        km_sentences += detect_km_sentences([contents], KM_SENTENCE_END)
+        km_sentences += detect_zh_sentences([contents_title], ZH_SENTENCE_END)
+        km_sentences += detect_zh_sentences([contents_body], ZH_SENTENCE_END)
         for km_sentence in km_sentences:
             km_translate.append(translate(km_sentence))
-        src_vn = string1
+        src_vn = string2
     # print('\nvn\n')
     # print(km_sentences)
-    f = open('test.txt', 'w+')
-    for km_sentence in km_sentences:
-        f.write(km_sentence+'\n')
-    f.close()
     parts = detect_title(src_vn)
     if len(parts) == 1:
         contents = parts[0]
@@ -428,8 +451,10 @@ def input_file(args):
         if arg[0] == 'language':
             lang_1 = arg[1]
             lang_2 = 'vi'
-            if lang_1 != 'km':
-                print('language not supported')
+            if lang_1 != 'km': 
+                if lang_1 != 'zh':
+                    print('language not supported')
+                    sys.exit()
         elif arg[0] == 'source':
             inputfile_2 = arg[1]
         elif arg[0] == 'target':
@@ -464,8 +489,8 @@ def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
         pair = sentence_pairs[i]
         if lang_1 == 'km':
             f.write(str(pair[0]) + "\t" + pair[2].replace('\n', ' ') + "\t" + pair[1].replace('\n', ' ') + "\n")
-        elif lang_2 == 'km':
-            f.write(str(pair[0]) + "\t" + pair[1].replace('\n', ' ') + "\t" + pair[2].replace('\n', ' ') + "\n")
+        elif lang_1 == 'zh':
+            f.write(str(pair[0]) + "\t" + pair[2].replace('\n', ' ') + "\t" + pair[1].replace('\n', ' ') + "\n")
 
     f.close()
 
