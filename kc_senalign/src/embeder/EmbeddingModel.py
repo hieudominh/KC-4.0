@@ -1,6 +1,9 @@
+from abc import abstractmethod
+
 from src.sentence.Sentence import Sentence
 
 
 class EmbeddingModel:
-    def embed_sentence(self, sentence: Sentence):
+    @abstractmethod
+    def embed_text(self, sentence: Sentence):
         pass

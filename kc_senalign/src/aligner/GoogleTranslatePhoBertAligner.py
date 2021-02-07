@@ -1,30 +1,26 @@
-import torch
+from abc import abstractmethod
 
+from src.article.EmbeddableArticle import EmbeddableArticle
 from src.aligner.Aligner import Aligner
 from src.article.Article import Article
-from src.article.EmbeddableArticle import EmbeddableArticle
 from src.article.embeddable.EmbeddableArticleFactory import EmbeddableArticleFactory
 from src.article.ArticleFactory import VIETNAMESE_LANGID
 from src.browser.Chrome import Chrome
-from src.comparator.CosineSimilarityComparator import CosineSimilarityComparator
 from src.embeder.PhoBert import PhoBert
 from src.translator.GoogleTranslate import GoogleTranslate
 
 
-class MonolingualEmbeddingAligner(Aligner):
+class GoogleTranslatePhoBertAligner(Aligner):
 
     def __init__(self, device):
         super().__init__()
 
         self.__device = device
-        self.__embedder = PhoBert(self.__device)
+        self._embedder = PhoBert(self.__device)
 
         self.__browser = Chrome()
         self.__translator = GoogleTranslate(self.__browser)
         self.__translator.set_target_langid(VIETNAMESE_LANGID)
-
-        self.__comparator = CosineSimilarityComparator()
-
         self.__article_factory = EmbeddableArticleFactory()
 
         self.similarity_matrix = None
@@ -46,16 +42,6 @@ class MonolingualEmbeddingAligner(Aligner):
         # print(translated_sentences)
         return self.__article_factory.from_sentences(translated_sentences, self.__translator.target_langid)
 
-    def __cmp(self, translation1: EmbeddableArticle, translation2: EmbeddableArticle):
-        similarity_matrix = torch.zeros((len(translation1.sentences), len(translation2.sentences)))
-        # print(translation1.sentences)
-        # print(translation2.sentences)
-        for idx1, sentence1 in enumerate(translation1.embedded_sentences):
-            for idx2, sentence2 in enumerate(translation2.embedded_sentences):
-                # print(sentence1,'\n',sentence2,'\n\n')
-                similarity_matrix[idx1, idx2] = sentence1.cmp(sentence2, self.__comparator)
-        return similarity_matrix
-
     def align(self):
         # print(self.langid1, '\n\n', self.article1,'\n\n\n', self.langid2, '\n\n', self.article2, '\n\n\n')
         article1 = self.__article_factory.from_text(self.article1, self.langid1)
@@ -74,15 +60,14 @@ class MonolingualEmbeddingAligner(Aligner):
             translation1 = self.__translate_article(article1)
             translation2 = self.__translate_article(article2)
 
+        result = self._process_alignment(article1, article2, translation1, translation2)
+        del translation1
+        del translation2
+        return result
 
-        # embed sentences
-        translation1.embed_sentences(self.__embedder)
-        translation2.embed_sentences(self.__embedder)
-
-        # compare embeddings of sentence pairs
-        similarity_matrix = self.__cmp(translation1, translation2)
-
-        return self.evaluator.evaluate(article1, article2, similarity_matrix)
+    @abstractmethod
+    def _process_alignment(self, article1: Article, article2: Article, translation1: EmbeddableArticle, translation2: EmbeddableArticle):
+        pass
 
     def stop(self):
         self.__browser.close()

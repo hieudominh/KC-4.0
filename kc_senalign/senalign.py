@@ -3,9 +3,11 @@ import sys
 
 import torch
 
-from src.aligner.MonolingualEmbeddingAligner import MonolingualEmbeddingAligner
-from src.evaluator.OneThresholdEvaluator import OneThresholdEvaluator
-from src.evaluator.TopPairEvaluable import TopPairEvaluator
+from src.aligner.MnGoogleTranslatePhoBertAligner import MnGoogleTranslatePhoBertAligner
+from src.aligner.VecalignGoogleTranslatePhoBertAligner import VecalignGoogleTranslatePhoBertAligner
+from src.mapper.OneThresholdMapper import OneThresholdEvaluator
+from src.mapper.TopPairMapper import TopPairEvaluator
+from src.mapper.VecalignMapper import VecalignMapper
 
 
 def input_file(args):
@@ -59,7 +61,7 @@ def out_to_file(lang_1, lang_2, outputfile, sentence_pairs):
     for i in range(len(sentence_pairs)):
         pair = sentence_pairs[i]
         # print(pair)
-        f.write(str(pair[0]) + "\t" + pair[1] + "\t" + pair[2] + "\n")
+        f.write(str(pair[0]) + "\t" + pair[2] + "\t" + pair[1] + "\n")
 
     f.close()
 
@@ -74,21 +76,27 @@ def main():
     parser.add_argument('-o', '--output', nargs='?', help='Input output file', required=True)
     parser.add_argument('-thres', '--threshold', nargs='?', const=0.6, type=float, default=0.6)
     parser.add_argument('-pair', '--maxpair', nargs='?', const=0,default=0,type=int, required=False)
+    parser.add_argument('--vecalign', nargs='?', const='phobert', type=str, help='To use vecalign with PhoBERT embeddings and Machine translation',  required=False)
+
     args = parser.parse_args()
     args_list = args._get_kwargs()
     lang_1, lang_2, string_1, string_2, outputfile, threshold, maxpair = input_file(args_list)
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    aligner = MonolingualEmbeddingAligner(device)
+    if args.vecalign == 'phobert':
+        aligner = VecalignGoogleTranslatePhoBertAligner(device)
+        alignment_max_size = 3
+        aligner.set_mapper(VecalignMapper(alignment_max_size))
+    else:
+        aligner = MnGoogleTranslatePhoBertAligner(device)
+        if (maxpair > 0):
+            aligner.set_mapper(TopPairEvaluator(maxpair))
+        else:
+            aligner.set_mapper(OneThresholdEvaluator(threshold))
+
     aligner.set_article_langid_pair(lang_1, lang_2)
     aligner.set_article_pair(string_1, string_2)
-
-    if (maxpair > 0):
-        aligner.set_evaluator(TopPairEvaluator(maxpair))
-    else:
-        aligner.set_evaluator(OneThresholdEvaluator(threshold))
-
     sentence_pairs = aligner.align()
     out_to_file(lang_1, lang_2, outputfile, sentence_pairs)
 

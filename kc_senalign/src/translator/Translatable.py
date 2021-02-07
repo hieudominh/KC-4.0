@@ -1,4 +1,4 @@
-from src.sentence.Sentence import Sentence
+from abc import abstractmethod
 
 
 class Translatable:
@@ -12,5 +12,6 @@ class Translatable:
     def set_target_langid(self, langid: str):
         self.target_langid = langid
 
+    @abstractmethod
     def translate(self, text: str) -> str:
         pass

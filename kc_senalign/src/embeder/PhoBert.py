@@ -18,29 +18,39 @@ class PhoBert(EmbeddingModel):
         self.__tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
         self.__model = AutoModel.from_pretrained("vinai/phobert-base", output_hidden_states=True).to(self.__device)
 
-    def embed_sentence(self, sentence: Sentence) -> torch.Tensor:
+    def embed_text(self, text: str) -> torch.Tensor:
         """
         Tokenize and embed a sentence with PhoBERT
         """
-        try:
-            line = self.__tokenize(sentence.text)
-            # mapping words and their ids in vncorenlp dictionary
-            input_ids = torch.tensor([self.__tokenizer.encode(line)])
-            input_ids.to(self.__device)
-            with torch.no_grad():
-                features = self.__model(input_ids)
-            # cleanup
-            # del input_ids
-            return self.__to_embedding(features)
-        except:
-            print("Maybe the input has more than 1 sentence. Please input ONE sentence only!")
+
+        # print(sentence)
+        line = self.__tokenize(text)
+        # print(line)
+        # mapping words and their ids in vncorenlp dictionary
+        # print(self.__tokenizer.encode(line))
+        input_ids = torch.tensor([self.__tokenizer.encode(line)])
+        # print(input_ids)
+        input_ids.to(self.__device)
+        with torch.no_grad():
+            features = self.__model(input_ids)
+        embeddings = self.__to_embedding(features)
+        # cleanup
+        del input_ids
+        return embeddings
 
     def __tokenize(self, text: str):
         """
         To perform word segmentation
         """
         segments = self.__rdrsegmenter.tokenize(text)
-        return " ".join(segments[0])
+        segmentation = None
+        if len(segments) > 1:
+            segmentation = " ".join(
+                [" ".join(segment) for segment in segments]
+            )
+        elif len(segments) == 1:
+            segmentation = " ".join(segments[0])
+        return segmentation
 
     def __to_embedding(self, features):
         """

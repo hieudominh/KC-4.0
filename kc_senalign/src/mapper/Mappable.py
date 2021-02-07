@@ -1,8 +1,8 @@
 from abc import abstractmethod
 
 
-class Comparable:
+class Mappable:
 
     @abstractmethod
-    def cmp(self, element1, element2):
+    def map_sentences(self) -> list:
         pass

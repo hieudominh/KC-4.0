@@ -12,7 +12,7 @@ class EmbeddableSentence(Sentence):
 
     def embed(self, embedder: EmbeddingModel):
         self.embedder = embedder
-        self.embedding = embedder.embed_sentence(self)
+        self.embedding = embedder.embed_text(self.text)
 
     def cmp(self, other, comparator: Comparable):
         return comparator.cmp(self.embedding, other.embedding)

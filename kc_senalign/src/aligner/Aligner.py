@@ -1,4 +1,6 @@
-from src.evaluator.Evaluatable import Evaluable
+from abc import abstractmethod
+
+from src.mapper.Mappable import Mappable
 
 
 class Aligner:
@@ -10,10 +12,10 @@ class Aligner:
         self.langid2 = None
         self.article2 = None
 
-        self.evaluator = None
+        self.mapper = None
 
-    def set_evaluator(self, evaluator: Evaluable):
-        self.evaluator = evaluator
+    def set_mapper(self, mapper: Mappable):
+        self.mapper = mapper
 
     def set_article_langid_pair(self, langid1: str, langid2: str):
         self.langid1 = langid1
@@ -23,8 +25,10 @@ class Aligner:
         self.article1 = article1
         self.article2 = article2
 
+    @abstractmethod
     def align(self):
         pass
 
+    @abstractmethod
     def stop(self):
         pass
